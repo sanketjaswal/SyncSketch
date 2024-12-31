@@ -6,8 +6,12 @@ import RoomPage from "./pages/Room";
 import io from "socket.io-client"
 import { useEffect, useState } from "react";
 
+<<<<<<< HEAD
 const server = "https://syncsketch-backend.onrender.com"
 // const server = "http://localhost:5000";
+=======
+const server = "https://syncsketch-backend.onrender.com";
+>>>>>>> 8b26a5da5724864b179a07cbde6611007b14f4f9
 
 
 const connectionOption = {
