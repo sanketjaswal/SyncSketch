@@ -1,0 +1,60 @@
+.row {
+    height: 100vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 20px auto;
+    max-width: 800px;
+    font-family: Arial, sans-serif;
+  }
+  
+
+  
+
+  .logo {
+    font-size: 2.5rem; 
+    font-weight: bold;
+    display: flex;
+    align-items: end;
+    position: absolute;
+    top: 15%;
+  }
+  
+  .sync {
+    color: #42474c;
+    font-size: 35px;
+
+  }
+  
+  .sketch {
+    color: #2196f3; 
+    font-style: italic; 
+    font-size: 45px;
+  }
+  
+  .form-container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 90vw;
+  }
+  
+  .form-box {
+    width: 100%;
+    max-width: 350px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+  }
+  
+  .form-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #007bff;
+  }
+  
+  

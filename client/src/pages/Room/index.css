@@ -1,0 +1,283 @@
+.app-container {
+  font-family: "Roboto", sans-serif;
+  padding: 20px;
+  text-align: center;
+  background-color: red;
+  /* height: 100vh; */
+  background: linear-gradient(to bottom, white, #3498db 80%, #ffffff);
+}
+
+.app-header {
+  margin-bottom: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.app-header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #333;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.loggo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  /* position: absolute; */
+  top: 15%;
+  text-shadow: 0 0 black;
+}
+
+.syncc {
+  color: #42474c;
+  font-size: 35px;
+}
+
+.menu-icon {
+  width: 25px;
+}
+
+.controls-bar {
+  z-index: 2;
+}
+
+.chat-visible {
+  display: flex;
+  opacity: 1;
+  margin: 0 20px 0 0;
+  transition: all 0.3s ease-in-out;
+  animation: fadeSide .5s ease-in-out;
+
+}
+
+.chat-hidden {
+  display: none;
+  opacity: 0;
+  margin: 0 20px 0 -310px;
+}
+
+.user-chat {
+  transition: 0.1s;
+  z-index: 0;
+  flex-direction: column;
+  gap: 10px;
+  align-items: start;
+  /* justify-content: center; */
+  width: 250px;
+  padding: 20px;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  font-size: 20px;
+  border-radius: 8px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+}
+
+.user-button {
+  padding: 10px 0;
+  border-radius: 5px;
+  /* box-shadow:  0px 2px 5px black; */
+  transform: scale(0.95);
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.user-button:hover {
+  background-color: rgb(63, 63, 63);
+  cursor: pointer;
+  transform: scale(1);
+  transition: 0.1s;
+  box-shadow: 0px 1px 5px black;
+}
+
+.user-button:active {
+  background-color: #2196f3;
+  transform: scale(0.98);
+  /* transition: .1s; */
+}
+
+.below-header {
+  display: flex;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 250px;
+  padding: 20px;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  border-radius: 8px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+}
+
+.control-item {
+  margin: 15px 0;
+  font-size: 0.9rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.control-item label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #bdc3c7;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.control-item label:hover {
+  color: #ecf0f1;
+}
+
+.tools {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tools label {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 15px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+  color: #333;
+  position: relative;
+}
+
+.tools label:hover {
+  color: #3498db;
+}
+
+.tools input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 10%;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  transition: all 0.3s ease;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-40px);
+}
+
+.tools input[type="radio"]:checked {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+.tools input[type="radio"]:checked::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 20%;
+  background-color: #fff;
+}
+
+.tools input[type="radio"]:hover {
+  border-color: #3498db;
+}
+
+.tools input[type="radio"]:disabled {
+  background-color: #e0e0e0;
+  border-color: #ccc;
+}
+
+.tools label span {
+  margin-left: 25px; /* Adjusted to create space for custom radio button */
+}
+
+.tools label:hover {
+  color: #3498db;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.button.clear {
+  background-color: #e63946;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.canvas-container {
+  border: 2px solid #ccc;
+  background: #fff;
+  width: 80%;
+  height: 80vh;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.canvas-container:hover {
+  transform: scale(1.02);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSide {
+  from {
+    opacity: 0;
+    width: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+/* radio buttons */
