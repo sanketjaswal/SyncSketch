@@ -64,20 +64,21 @@ Below is a list of dependencies used in the project:
 
 ## Features Working
 
-### Room 
+### `Room` 
 
 A room is a unique identifier that groups users for collaborative interactions within a specific session.
 
-### Create Room
+### `Create Room`
 
 To create a room -
    - Define the User name.
    - Generate a unique room code.
    - Create a room. 
    - Room create will be joined to the new room.
-Room creater can share the room ID to the other users.
+ 
+> Room creater can share the room ID to the other users.
 
-### Join Room
+### `Join Room`
 
 To join a room -
    - Define the User name.
@@ -85,23 +86,25 @@ To join a room -
    - Join the room. 
    - New user will be joined to the room.
 
-### Whiteboard
+### `Whiteboard`
 
 A whiteboard is an interactive canvas where users can draw and collaborate in real-time, often used for brainstorming, teaching, or creative projects.
 
-### Color Picker
+### `Color Picker`
 
 Color picker allows users to select and customize colors for their drawing tools, enhancing the creative experience with a range of colors and shades.
 
-### Sketch Tools
+### `Sketch Tools`
 
 Sketching tools provide users with various options of tools to create and modify drawings with different styles and effects.
 Tools available in Application -
    - **Pencil** - To draw free hand drawing.
    - **Line** - To draw a straight line.
-   - **Quadrilateral** - To draw a shape with four sides. 
+   - **Quadrilateral** - To draw a shape with four sides.
 
-### Draw
+> More tools to be added in coming updates.
+
+### `Draw`
 
 To do sketching follow these steps -
    - Chosse your desired tool and color.
@@ -109,11 +112,11 @@ To do sketching follow these steps -
    - Hold the click and Drag the mouse to your desire. 
    - Release the Mouse button.
 
-### Undo / Redo
+### `Undo / Redo`
 
 Undo and Redo allow users to revert or reapply their previous actions, providing flexibility and control over their artwork.
 
-### Clear Canvas
+### `Clear Canvas`
 
 Clear Canvas allows users to erase all content on the canvas, providing a fresh workspace for new drawings.
 
