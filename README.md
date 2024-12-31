@@ -60,7 +60,7 @@ Below is a list of dependencies used in the project:
 - **[Rough.js](https://roughjs.com/)**: Library for creating hand-drawn, sketchy graphics in web applications.
 - **[Socket.io](https://www.npmjs.com/package/scoketio)**: Library for real-time, bidirectional communication between clients and servers.
 - **[Eslint](https://www.npmjs.com/package/eslint)**: ESLint tool used to detects and fixes JavaScript code issues.
-- **[Prettier](https://www.npmjs.com/package/prettier)**: For code formatterinf with consistent styling.
+- **[Prettier](https://www.npmjs.com/package/prettier)**: For code formatter with consistent styling.
 
 ## Features Working
 
