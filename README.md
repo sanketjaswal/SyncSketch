@@ -71,10 +71,10 @@ A room is a unique identifier that groups users for collaborative interactions w
 ### Create Room
 
 To create a room -
-    - Define the User name.
-    - Generate a unique room code.
-    - Create a room. 
-    - Room create will be joined to the new room.
+   - Define the User name.
+   - Generate a unique room code.
+   - Create a room. 
+   - Room create will be joined to the new room.
 Room creater can share the room ID to the other users.
 
 ### Join Room
