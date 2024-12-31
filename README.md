@@ -1,4 +1,4 @@
-# syncSketch
+# ![alt text](https://img.icons8.com/color/40/sign-up.png) syncSketch 
 
 ### Overview
 
@@ -133,14 +133,16 @@ Clear Canvas allows users to erase all content on the canvas, providing a fresh 
   ├── /assets                       # Includes assets for application
   │
   ├── App.jsx                       # Main component that houses the layout
-  └── App.css                       # Global CSS file
+  ├── App.css                       # Global CSS file
+  │
+  └── index.html                    # Main index.html file
 
 server ──
   ├── /utils                        # Includes utilities for server
   |
   ├── server.js                     # Main file for start server 
   │
-  ├── .env                          # Includes the environmental variables
+  └── .env                          # Includes the environmental variables
 ```
 
 
