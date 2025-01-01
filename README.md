@@ -62,7 +62,7 @@ Below is a list of dependencies used in the project:
 - **[Eslint](https://www.npmjs.com/package/eslint)**: ESLint tool used to detects and fixes JavaScript code issues.
 - **[Prettier](https://www.npmjs.com/package/prettier)**: For code formatter with consistent styling.
 
-## Features Working
+## Features
 
 ### `Room` 
 

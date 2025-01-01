@@ -2,7 +2,6 @@
   font-family: "Roboto", sans-serif;
   padding: 20px;
   text-align: center;
-  background-color: red;
   /* height: 100vh; */
   background: linear-gradient(to bottom, white, #3498db 80%, #ffffff);
 }

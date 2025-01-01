@@ -1,60 +1,112 @@
 .row {
-    height: 100vh;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    margin: 20px auto;
-    max-width: 800px;
-    font-family: Arial, sans-serif;
-  }
-  
+  height: 100vh;
+  width: 100vw;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  font-family: Arial, sans-serif;
+  /* background-image: url(../../assets/paintbrush.png); */
+  /* background: linear-gradient(to bottom, #ffffff, rgb(255, 255, 255),#5069d8), url("../../assets/paintbrush.png"); */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: saturate(1.5);
+  transition: 1s;
+}
 
-  
+.logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  position: absolute;
+  transition: 1s ease-in-out;
+  font-family: "Dancing Script", serif;
+  cursor: pointer;
+  top: 45%;
+  transform: scale(2);
+}
 
-  .logo {
-    font-size: 2.5rem; 
-    font-weight: bold;
-    display: flex;
-    align-items: end;
-    position: absolute;
-    top: 15%;
-  }
-  
-  .sync {
-    color: #42474c;
-    font-size: 35px;
+.logo:hover {
+  transform: scale(1.1);
+  transition: 0.5s;
+}
 
+#logo-pencil {
+  transition: 1s;
+  opacity: 0;
+}
+
+.logo:hover #logo-pencil {
+  transform: scale(0.9);
+  transition: 0.5s;
+}
+
+.sync {
+  color: #42474c;
+  font-size: 35px;
+  margin-inline: 0 5px;
+  position: absolute;
+  transition: .5s;
+  left: 0;
+}
+
+.sketch {
+  color: #2196f3;
+  font-style: italic;
+  font-size: 45px;
+  position: absolute;
+  right: 0;
+  transition: .5s;
+
+}
+
+.form-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 90vw;
+}
+
+.form-box {
+  width: 100%;
+  max-width: 350px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9d2;
+  opacity: 0;
+  transition: 1s;
+  animation: fadeIn .5s ease-in-out 4s ;
+
+}
+
+.form-box:hover{
+  background-color: white;
+  transition: .2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.form-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #007bff;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  .sketch {
-    color: #2196f3; 
-    font-style: italic; 
-    font-size: 45px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .form-container {
-    display: flex;
-    justify-content: space-evenly;
-    width: 90vw;
-  }
-  
-  .form-box {
-    width: 100%;
-    max-width: 350px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-  }
-  
-  .form-title {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #007bff;
-  }
-  
-  
+}
