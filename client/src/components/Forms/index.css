@@ -8,7 +8,6 @@
   justify-content: space-evenly;
   font-family: Arial, sans-serif;
   /* background-image: url(../../assets/paintbrush.png); */
-  /* background: linear-gradient(to bottom, #ffffff, rgb(255, 255, 255),#5069d8), url("../../assets/paintbrush.png"); */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -51,7 +50,7 @@
   font-size: 35px;
   margin-inline: 0 5px;
   position: absolute;
-  transition: .5s;
+  transition: 0.5s;
   left: 0;
 }
 
@@ -61,8 +60,7 @@
   font-size: 45px;
   position: absolute;
   right: 0;
-  transition: .5s;
-
+  transition: 0.5s;
 }
 
 .form-container {
@@ -81,15 +79,13 @@
   background-color: #f9f9f9d2;
   opacity: 0;
   transition: 1s;
-  animation: fadeIn .5s ease-in-out 4s ;
-
+  animation: fadeIn 0.5s ease-in-out 4s;
 }
 
-.form-box:hover{
+.form-box:hover {
   background-color: white;
-  transition: .2s;
+  transition: 0.2s;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
 }
 
 .form-title {
@@ -99,7 +95,6 @@
   color: #007bff;
 }
 
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -108,5 +103,14 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes image-clip {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }

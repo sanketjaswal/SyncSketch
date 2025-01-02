@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./index.css";
 import Whiteboard from "../../components/Whiteboard";
 import { useParams } from "react-router-dom";
+import brush from "../../assets/paintbrush.png";
 
 const RoomPage = ({ user, socket, users }) => {
   const canvasRef = useRef(null);
@@ -68,60 +69,87 @@ const RoomPage = ({ user, socket, users }) => {
 
       <div className="below-header">
         <div className="controls controls-bar">
+          <img className="controls-bgi" src={brush}></img>
           <div className="control-item user-button" onClick={toggleUserchat}>
             <img
               className="menu-icon"
               src="https://img.icons8.com/?size=100&id=36389&format=png&color=ffffff"
               alt="User Menu Icon"
             />
-            <h2>
-              {users.length} Users Online</h2>
+            <h2>{users.length} Users Online</h2>
           </div>
 
-          <div className="control-item">
-            <label>
-              Color Picker:
-              <input
-                type="color"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
+          <div className="control-item paintHolder">
+            <img
+              width="30"
+              height="30"
+              src="https://img.icons8.com/ios-filled/50/paint-brush.png"
+              alt="paint-brush"
+              id="paint-plate"
+            />
+            <input
+              id="color-picker"
+              type="color"
+              value={color}
+              onChange={(e) => {
+                setColor(e.target.value);
+                console.log(e.target.value);
+              }}
+            />
+          </div>
+
+          <div className="control-buttons">
+            <div
+              className="tool-btn"
+              onClick={() => {
+                setTool("eraser");
+              }}
+            >
+              <img
+                width="28"
+                id="eraser"
+                height="28"
+                src="https://img.icons8.com/metro/26/eraser.png"
+                alt="eraser"
               />
-            </label>
+            </div>
+            <div className="tool-btn" onClick={() => setTool("pencil")}>
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/external-itim2101-fill-itim2101/64/1A1A1A/external-pen-school-stationery-itim2101-fill-itim2101.png"
+                alt="external-pen-school-stationery-itim2101-fill-itim2101"
+              />
+            </div>
+            <div className="tool-btn" onClick={() => setTool("line")}>
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios/50/ruler.png"
+                alt="ruler"
+              />
+            </div>
+            <div className="tool-btn" onClick={() => setTool("rect")}>
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/material-outlined/24/rectangle-stroked.png"
+                alt="rectangle-stroked"
+              />
+            </div>
+            <div className="tool-btn"></div>
+            <div className="tool-btn"></div>
           </div>
 
-          <div className="control-item">
-            <div className="tools">
-              <label>
-                <input
-                  type="radio"
-                  name="tools"
-                  value="pencil"
-                  checked={tool === "pencil"}
-                  onChange={() => setTool("pencil")}
-                />
-                Pencil
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="tools"
-                  value="line"
-                  checked={tool === "line"}
-                  onChange={() => setTool("line")}
-                />
-                Line
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="tools"
-                  value="rect"
-                  checked={tool === "rect"}
-                  onChange={() => setTool("rect")}
-                />
-                Rectangle
-              </label>
-            </div>
+          <div className="control-item brush-div">
+            <label>Brush Size :</label>
+            <input
+              type="range"
+              min="1"
+              max="100"
+              class="slider"
+              id="myRange"
+            ></input>
           </div>
 
           <div className="control-item">
@@ -130,14 +158,13 @@ const RoomPage = ({ user, socket, users }) => {
               disabled={elements.length === 0}
               onClick={undo}
             >
-              Undo
-            </button>
+<img width="30" height="30" src="https://img.icons8.com/ios-filled/50/undo.png" alt="undo"/>            </button>
             <button
               className="button"
               disabled={history.length < 1}
               onClick={redo}
             >
-              Redo
+              <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/redo.png" alt="redo"/>
             </button>
           </div>
 
@@ -156,7 +183,10 @@ const RoomPage = ({ user, socket, users }) => {
           {users
             .filter((usr) => usr.roomId === roomId)
             .map((usr, index) => (
-              <span key={index}>{usr.name}{user && user.userId === usr.userId && " (You)"}</span>
+              <span key={index}>
+                {usr.name}
+                {user && user.userId === usr.userId && " (You)"}
+              </span>
             ))}
         </div>
 
@@ -175,6 +205,5 @@ const RoomPage = ({ user, socket, users }) => {
     </div>
   );
 };
-
 
 export default RoomPage;

@@ -1,7 +1,5 @@
-
-
-.theContainer{
-    transition: 1s;
-background: white;
-    overflow: hidden;
+.theContainer {
+  transition: 1s;
+  background: white;
+  overflow: hidden;
 }
