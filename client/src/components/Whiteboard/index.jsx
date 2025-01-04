@@ -13,6 +13,10 @@ const Whiteboard = ({
   tool,
   color,
   socket,
+  fillColor,
+  fillStyle,
+  brushsize,
+  roughness,
 }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const requestRef = useRef(null);
@@ -63,14 +67,14 @@ const Whiteboard = ({
       if (element.type === "pencil") {
         roughCanvas.linearPath(element.path, {
           stroke: element.stroke,
-          strokeWidth: 1,
-          roughness: 0,
+          strokeWidth: element.strokeWidth,
+          roughness: element.roughness,
         });
-      }else if (element.type === "eraser") {
+      } else if (element.type === "eraser") {
         roughCanvas.linearPath(element.path, {
           stroke: "white",
-          strokeWidth: 5,
-          roughness: 0,
+          strokeWidth: element.strokeWidth,
+          roughness: element.roughness,
         });
       } else if (element.type === "rect") {
         roughCanvas.rectangle(
@@ -78,7 +82,13 @@ const Whiteboard = ({
           element.offsetY,
           element.width,
           element.height,
-          { stroke: element.stroke, strokeWidth: 5, roughness: 0 }
+          {
+            stroke: element.stroke,
+            strokeWidth: element.strokeWidth,
+            roughness: element.roughness,
+            fill: element.fill,
+            fillStyle: element.style,
+          }
         );
       } else if (element.type === "line") {
         roughCanvas.line(
@@ -86,7 +96,25 @@ const Whiteboard = ({
           element.offsetY,
           element.width,
           element.height,
-          { stroke: element.stroke, strokeWidth: 1, roughness: 0 }
+          {
+            stroke: element.stroke,
+            strokeWidth: element.strokeWidth,
+            roughness: element.roughness,
+          }
+        );
+      } else if (element.type === "eclipse") {
+        roughCanvas.ellipse(
+          element.offsetX + element.width / 2,
+          element.offsetY + element.height / 2,
+          Math.abs(element.width),
+          Math.abs(element.height),
+          {
+            stroke: element.stroke,
+            strokeWidth: element.strokeWidth,
+            roughness: element.roughness,
+            fill: element.fill,
+            fillStyle: element.style,
+          }
         );
       }
     });
@@ -110,16 +138,19 @@ const Whiteboard = ({
           type: "pencil",
           path: [[offsetX, offsetY]],
           stroke: color,
+          strokeWidth: brushsize,
+          roughness: roughness,
         },
       ]);
-    }else if (tool === "eraser") {
+    } else if (tool === "eraser") {
       setElements((prevElements) => [
         ...prevElements,
         {
           type: "eraser",
           path: [[offsetX, offsetY]],
           stroke: white,
-          // strokeWidth: 3
+          strokeWidth: brushsize,
+          roughness: roughness,
         },
       ]);
     } else if (tool === "line") {
@@ -132,20 +163,77 @@ const Whiteboard = ({
           width: offsetX,
           height: offsetY,
           stroke: color,
+          strokeWidth: brushsize,
+          roughness: roughness,
         },
       ]);
     } else if (tool === "rect") {
-      setElements((prevElements) => [
-        ...prevElements,
-        {
-          type: "rect",
-          offsetX,
-          offsetY,
-          width: 0,
-          height: 0,
-          stroke: color,
-        },
-      ]);
+      if (fillStyle) {
+        setElements((prevElements) => [
+          ...prevElements,
+          {
+            type: "rect",
+            offsetX,
+            offsetY,
+            width: 0,
+            height: 0,
+            stroke: color,
+            fill: fillColor,
+            style: fillStyle,
+            strokeWidth: brushsize,
+            roughness: roughness,
+          },
+        ]);
+      } else {
+        setElements((prevElements) => [
+          ...prevElements,
+
+          {
+            type: "rect",
+            offsetX,
+            offsetY,
+            width: 0,
+            height: 0,
+            stroke: color,
+            strokeWidth: brushsize,
+            roughness: roughness,
+          },
+        ]);
+      }
+    } else if (tool === "eclipse") {
+      if (fillStyle) {
+        setElements((prevElements) => [
+          ...prevElements,
+
+          {
+            type: "eclipse",
+            offsetX,
+            offsetY,
+            width: 0,
+            height: 0,
+            stroke: color,
+            fill: fillColor,
+            style: fillStyle,
+            strokeWidth: brushsize,
+            roughness: roughness,
+          },
+        ]);
+      } else {
+        setElements((prevElements) => [
+          ...prevElements,
+
+          {
+            type: "eclipse",
+            offsetX,
+            offsetY,
+            width: 0,
+            height: 0,
+            stroke: color,
+            strokeWidth: brushsize,
+            roughness: roughness,
+          },
+        ]);
+      }
     }
 
     setIsDrawing(true);
@@ -171,6 +259,9 @@ const Whiteboard = ({
           lastElement.width = offsetX;
           lastElement.height = offsetY;
         } else if (tool === "rect" && lastElement.type === "rect") {
+          lastElement.width = offsetX - lastElement.offsetX;
+          lastElement.height = offsetY - lastElement.offsetY;
+        } else if (tool === "eclipse" && lastElement.type === "eclipse") {
           lastElement.width = offsetX - lastElement.offsetX;
           lastElement.height = offsetY - lastElement.offsetY;
         }
@@ -210,7 +301,7 @@ const Whiteboard = ({
 
   return (
     <div
-    className="drawing-canvas"
+      className="drawing-canvas"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}

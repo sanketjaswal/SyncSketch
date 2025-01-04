@@ -1,8 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import "./index.css";
-import Whiteboard from "../../components/Whiteboard";
 import { useParams } from "react-router-dom";
+
+import { toolHover } from "../../utils/hover";
+import Whiteboard from "../../components/Whiteboard";
+
 import brush from "../../assets/paintbrush.png";
+import hachure from "../../assets/hachure.png";
+import zigzagLine from "../../assets/zigzag-line.png";
+import dots from "../../assets/dots.png";
+import crossHatch from "../../assets/cross-hatch.png";
+import dashed from "../../assets/dashed.png";
+import sunburst from "../../assets/sunburst.png";
+import solid from "../../assets/solid.png";
 
 const RoomPage = ({ user, socket, users }) => {
   const canvasRef = useRef(null);
@@ -13,7 +23,12 @@ const RoomPage = ({ user, socket, users }) => {
   const [color, setColor] = useState("black");
   const [elements, setElements] = useState([]);
   const [history, setHistory] = useState([]);
+  const [fillColor, setFillColor] = useState("black");
+  const [fillStyle, setFillStyle] = useState("dashed");
   const [chatVisible, setChatVisible] = useState(false);
+  const [brushsize, setBrushSize] = useState(1);
+  const [roughness, setRoughness] = useState(0);
+
 
   // Handle clearing the canvas
   const handleClearCanvas = () => {
@@ -28,7 +43,7 @@ const RoomPage = ({ user, socket, users }) => {
     setElements([]);
     setHistory([]);
   };
-
+  
   // Handle undo action
   const undo = () => {
     if (elements.length > 0) {
@@ -49,27 +64,75 @@ const RoomPage = ({ user, socket, users }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
-
   // Toggle user chat visibility
   const toggleUserchat = () => {
     setChatVisible(!chatVisible);
   };
 
+  useEffect(() => {
+    toolIconChange();
+  }, [tool]);
+
+  // tool icon change
+  const toolIconChange = () => {
+    const canvs = document.getElementsByClassName("drawing-canvas")[0];
+    if (tool == "pencil" || tool == "line") {
+      canvs.style.cursor =
+        "url(https://img.icons8.com/external-prettycons-solid-prettycons/40/external-pencil-tools-prettycons-solid-prettycons-2.png)0 50, auto";
+    } else if (tool == "eraser") {
+      canvs.style.cursor =
+        "url(https://img.icons8.com/metro/25/eraser.png)0 50 , auto";
+    } else if (tool == "rect") {
+      canvs.style.cursor = "crosshair";
+    }
+  };
+
+  const myFunction = () => {
+    document.getElementById("myDropdown").classList.add("show");
+  }
+
+  // pattern logo change
+  useEffect(() => {
+    const patterIcon = document.getElementById("dropdown-value-image");
+    if (fillStyle == "zigzag-line") {
+      patterIcon.src = zigzagLine;
+    } else if (fillStyle == "cross-hatch") {
+      patterIcon.src = crossHatch;
+    } else if (fillStyle == "") {
+      patterIcon.src = "https://img.icons8.com/windows/32/hand-holding.png";
+    } else if (fillStyle == "dots") {
+      patterIcon.src = dots;
+    } else if (fillStyle == "dashed") {
+      patterIcon.src = dashed;
+    } else if (fillStyle == "sunburst") {
+      patterIcon.src = sunburst;
+    } else if (fillStyle == "solid") {
+      patterIcon.src = solid;
+    } else if (fillStyle == "hachure") {
+      patterIcon.src = hachure;
+    }
+    // console.log(patterIcon.src);
+  }, [fillStyle]);
+
   return (
     <div className="app-container">
+      <div className="hoverName">
+        <p className="Hnamep">hello</p>
+      </div>
       <header className="app-header">
         <div className="loggo">
           <span className="syncc">Sync</span>
-          <span className="sketch">Sketch</span>
+          <span className="sketche">Sketch</span>
         </div>
       </header>
 
       <div className="below-header">
-        <div className="controls controls-bar">
+        <div
+          className="controls controls-bar"
+          onMouseOver={(e) => toolHover(e)}
+        >
           <img className="controls-bgi" src={brush}></img>
+          {/* chat button */}
           <div className="control-item user-button" onClick={toggleUserchat}>
             <img
               className="menu-icon"
@@ -79,14 +142,19 @@ const RoomPage = ({ user, socket, users }) => {
             <h2>{users.length} Users Online</h2>
           </div>
 
-          <div className="control-item paintHolder">
+          {/* stroke color picker */}
+          <div
+            className="control-item paintHolder hover-tool"
+            id="Stroke-color"
+          >
             <img
               width="30"
               height="30"
-              src="https://img.icons8.com/ios-filled/50/paint-brush.png"
+              src="https://img.icons8.com/dusk/30/paint-brush.png"
               alt="paint-brush"
               id="paint-plate"
             />
+
             <input
               id="color-picker"
               type="color"
@@ -98,9 +166,113 @@ const RoomPage = ({ user, socket, users }) => {
             />
           </div>
 
+          <div className="fill-container">
+            {/*fill color picker */}
+            <div className="fill-div paintHolder hover-tool" id="Fill-color">
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/color/30/fill-color.png"
+                alt="fill-color"
+              />
+              <input
+                id="fill-color-picker"
+                type="color"
+                value={fillColor}
+                onChange={(e) => {
+                  setFillColor(e.target.value);
+                  // console.log(e.target.value);
+                }}
+              />
+            </div>
+
+            {/* dropdown */}
+            <div className="dropdown ">
+              <button
+                onClick={() => document.getElementById("myDropdown").classList.add("show")}
+                className="dropbtn tool-btn hover-tool"
+                id="Fill-Pattern"
+              >
+                <img
+                  id="dropdown-value-image"
+                  width="40"
+                  height="40"
+                  src="https://img.icons8.com/windows/32/hand-holding.png"
+                  alt="empty_1"
+                />
+              </button>
+              {/*fill pattern picker */}
+              <div id="myDropdown" className="dropdown-content">
+                <div
+                  className="drop-pattern hover-tool"
+                  id="Hachure"
+                  onClick={() => setFillStyle("hachure")}
+                >
+                  <img src={hachure}></img>
+                </div>
+                <div
+                  className="drop-pattern hover-tool"
+                  id="zigzag-line"
+                  onClick={() => setFillStyle("zigzag-line")}
+                >
+                  <img src={zigzagLine}></img>
+                </div>
+                <div
+                  className="drop-pattern  hover-tool"
+                  id="dots"
+                  onClick={() => setFillStyle("dots")}
+                >
+                  <img src={dots}></img>
+                </div>
+                <div
+                  className="drop-pattern  hover-tool"
+                  id="cross-hatch"
+                  onClick={() => setFillStyle("cross-hatch")}
+                >
+                  <img src={crossHatch}></img>
+                </div>
+                <div
+                  className="drop-pattern  hover-tool"
+                  id="dashed "
+                  onClick={() => setFillStyle("dashed")}
+                >
+                  <img src={dashed}></img>
+                </div>
+                <div
+                  className="drop-pattern  hover-tool"
+                  id=" sunburst"
+                  onClick={() => setFillStyle("sunburst")}
+                >
+                  <img src={sunburst}></img>
+                </div>
+                <div
+                  className="drop-pattern  hover-tool"
+                  id="solid "
+                  onClick={() => setFillStyle("solid")}
+                ></div>
+                <div
+                  className="drop-pattern  hover-tool"
+                  id="Remove"
+                  onClick={() => setFillStyle(null)}
+                >
+                  <img
+                    width="28"
+                    height="28"
+                    src="https://img.icons8.com/windows/32/hand-holding.png"
+                    alt="empty_1"
+                  ></img>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* tools */}
           <div className="control-buttons">
+
+            {/* eraser */}
             <div
-              className="tool-btn"
+              className="tool-btn hover-tool"
+              id="Eraser"
               onClick={() => {
                 setTool("eraser");
               }}
@@ -113,7 +285,13 @@ const RoomPage = ({ user, socket, users }) => {
                 alt="eraser"
               />
             </div>
-            <div className="tool-btn" onClick={() => setTool("pencil")}>
+
+            {/* pencil */}
+            <div
+              className="tool-btn hover-tool"
+              id="Pencil"
+              onClick={() => setTool("pencil")}
+            >
               <img
                 width="30"
                 height="30"
@@ -121,7 +299,13 @@ const RoomPage = ({ user, socket, users }) => {
                 alt="external-pen-school-stationery-itim2101-fill-itim2101"
               />
             </div>
-            <div className="tool-btn" onClick={() => setTool("line")}>
+
+            {/* Line */}
+            <div
+              className="tool-btn hover-tool"
+              id="Line"
+              onClick={() => setTool("line")}
+            >
               <img
                 width="30"
                 height="30"
@@ -129,7 +313,13 @@ const RoomPage = ({ user, socket, users }) => {
                 alt="ruler"
               />
             </div>
-            <div className="tool-btn" onClick={() => setTool("rect")}>
+
+            {/* Rectangle */}
+            <div
+              className="tool-btn hover-tool"
+              id="Rectangle"
+              onClick={() => setTool("rect")}
+            >
               <img
                 width="30"
                 height="30"
@@ -137,44 +327,102 @@ const RoomPage = ({ user, socket, users }) => {
                 alt="rectangle-stroked"
               />
             </div>
-            <div className="tool-btn"></div>
-            <div className="tool-btn"></div>
+
+            {/* circle */}
+            <div className="tool-btn hover-tool" id="Circle">
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/sf-regular/30/circled.png"
+                alt="circled"
+              />
+            </div>
+
+            {/* eclipse */}
+            <div className="tool-btn hover-tool" id="Eclipse">
+            <img
+                width="30"
+                height="30"
+                onClick={() => setTool("eclipse")}
+                src="https://img.icons8.com/sf-regular/30/eclipse.png"
+                alt="eclipse"
+              />
+            </div>
           </div>
 
-          <div className="control-item brush-div">
-            <label>Brush Size :</label>
+          {/* brush size slider */}
+          <div className="control-item brush-div hover-tool" id="Brush-Size">
             <input
               type="range"
               min="1"
               max="100"
-              class="slider"
+              defaultValue="1"
+              className="slider"
               id="myRange"
+              onChange={(e) => setBrushSize(e.target.value)}
             ></input>
           </div>
 
+          {/* Roughness slider */}
+          <div className="control-item brush-div hover-tool" id="Roughness">
+            <input
+              type="range"
+              min="0"
+              max="2"
+              defaultValue="0"
+              className="slider"
+              id="myRange"
+              onChange={(e) => setRoughness(e.target.value)}
+            ></input>
+          </div>
+
+          {/* undo */}
           <div className="control-item">
             <button
-              className="button"
+              className="button hover-tool"
+              id="Undo"
               disabled={elements.length === 0}
               onClick={undo}
             >
-<img width="30" height="30" src="https://img.icons8.com/ios-filled/50/undo.png" alt="undo"/>            </button>
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios-filled/50/undo.png"
+                alt="undo"
+              />{" "}
+            </button>
+
+            {/* clear all */}
             <button
-              className="button"
+              className="button clear hover-tool"
+              id="Clear All"
+              onClick={handleClearCanvas}
+            >
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios/50/delete--v1.png"
+                alt="delete--v1"
+              />{" "}
+            </button>
+            {/* redo */}
+            <button
+              className="button hover-tool"
+              id="Redo"
               disabled={history.length < 1}
               onClick={redo}
             >
-              <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/redo.png" alt="redo"/>
-            </button>
-          </div>
-
-          <div className="control-item">
-            <button className="button clear" onClick={handleClearCanvas}>
-              Clear Canvas
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios-filled/50/redo.png"
+                alt="redo"
+              />
             </button>
           </div>
         </div>
 
+        {/* user chat */}
         <div
           className={`user-chat ${
             chatVisible ? "chat-visible" : "chat-hidden"
@@ -189,7 +437,7 @@ const RoomPage = ({ user, socket, users }) => {
               </span>
             ))}
         </div>
-
+        {/* whiteboard */}
         <div className="canvas-container">
           <Whiteboard
             canvasRef={canvasRef}
@@ -199,6 +447,10 @@ const RoomPage = ({ user, socket, users }) => {
             tool={tool}
             color={color}
             socket={socket}
+            fillColor={fillColor}
+            fillStyle={fillStyle}
+            brushsize={brushsize}
+            roughness={roughness}
           />
         </div>
       </div>
