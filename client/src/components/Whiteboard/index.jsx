@@ -56,24 +56,36 @@ const Whiteboard = ({
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    ctx.beginPath();
+    //
+    ctx.arc(100, 100, 100, 0, 1100, 10);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "red";
+    ctx.stroke();
+
     elements.forEach((element) => {
       if (element.style == null) {
         element.fill = "transparent";
       }
+      // pencil
       if (element.type === "pencil" || element.type === "eraser") {
         roughCanvas.linearPath(element.path, {
           stroke: element.stroke,
           strokeWidth: element.strokeWidth,
           roughness: element.roughness,
         });
-      } else if (element.type === "curve") {
+      }
+      // curve
+      else if (element.type === "curve") {
         roughCanvas.curve(element.points, {
-          bowing: 10,
+          // bowing: 10,
           stroke: element.stroke,
           strokeWidth: element.strokeWidth,
           roughness: element.roughness,
         });
-      } else if (element.type === "rect") {
+      }
+      // rectangle
+      else if (element.type === "rect") {
         roughCanvas.rectangle(
           element.offsetX,
           element.offsetY,
@@ -88,7 +100,9 @@ const Whiteboard = ({
             fillStyle: element.style,
           }
         );
-      } else if (element.type === "line") {
+      }
+      // line
+      else if (element.type === "line") {
         roughCanvas.line(
           element.offsetX,
           element.offsetY,
@@ -100,7 +114,9 @@ const Whiteboard = ({
             roughness: element.roughness,
           }
         );
-      } else if (element.type === "eclipse") {
+      }
+      // eclipse
+      else if (element.type === "eclipse") {
         roughCanvas.ellipse(
           element.offsetX + element.width / 2,
           element.offsetY + element.height / 2,
@@ -114,7 +130,9 @@ const Whiteboard = ({
             fillStyle: element.style,
           }
         );
-      } else if (element.type === "circle") {
+      }
+      // circle
+      else if (element.type === "circle") {
         roughCanvas.circle(
           element.offsetX,
           element.offsetY,
@@ -127,7 +145,37 @@ const Whiteboard = ({
             fillStyle: element.style,
           }
         );
-      } else if (element.type === "text") {
+      }
+      // arc
+      else if (element.type === "arc") {
+        roughCanvas.arc(
+          element.offsetX,
+          element.offsetY,
+          element.width,
+          element.height,
+          element.startAngle,
+          element.endAngle,
+          {
+            stroke: element.stroke,
+            strokeWidth: element.strokeWidth,
+            roughness: element.roughness,
+            fill: element.fill,
+            fillStyle: element.style,
+          }
+        );
+      }
+      // polygon
+      else if (element.type === "polygon") {
+        roughCanvas.polygon(element.points, {
+          stroke: element.stroke,
+          strokeWidth: element.strokeWidth,
+          roughness: element.roughness,
+          fill: element.fill,
+          fillStyle: element.style,
+        });
+      }
+      // Text
+      else if (element.type === "text") {
         ctx.font = `${element.fontSize || 16}px Arial`;
         ctx.fillStyle = element.stroke || "black";
         ctx.fillText(element.content, element.offsetX, element.offsetY);
@@ -139,6 +187,7 @@ const Whiteboard = ({
     drawElements(elements);
   }, [elements]);
 
+  // mouse down
   const handleMouseDown = (e) => {
     const { offsetX, offsetY } = e.nativeEvent;
 
@@ -152,6 +201,8 @@ const Whiteboard = ({
       style: fillStyle,
       width: 0,
       height: 0,
+      startAngle: 0,
+      endAngle: 0,
       points: [],
       path: [],
     };
@@ -179,6 +230,13 @@ const Whiteboard = ({
         break;
       case "eclipse":
         element.type = "eclipse";
+        break;
+      case "polygon":
+        element.type = "polygon";
+        element.points = [[offsetX, offsetY]];
+        break;
+      case "arc":
+        element.type = "arc";
         break;
       case "circle":
         element.type = "circle";
@@ -228,6 +286,14 @@ const Whiteboard = ({
             lastElement.width = dx;
             lastElement.height = dy;
             break;
+          case "arc":
+            const dxArc = offsetX - lastElement.offsetX;
+            const dyArc = offsetY - lastElement.offsetY;
+            lastElement.width = Math.abs(dxArc) * 2;
+            lastElement.height = Math.abs(dyArc) * 2;
+            lastElement.startAngle = 0; // Start at 0 radians
+            lastElement.endAngle = Math.PI; // Half-circle for demo
+            break;
           case "circle":
             const d = Math.sqrt(
               Math.pow(offsetX - lastElement.offsetX, 2) +
@@ -239,6 +305,8 @@ const Whiteboard = ({
             break;
         }
       }
+
+      // console.log(updatedElements);
 
       return updatedElements;
     });
@@ -253,6 +321,7 @@ const Whiteboard = ({
     <div
       className="drawing-canvas"
       onMouseDown={handleMouseDown}
+      onClick={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >

@@ -43,6 +43,7 @@ const RoomPage = ({ user, socket, users }) => {
     setHistory([]);
   };
 
+  // download canvas image
   const downloadCanvas = () => {
     const canvas = canvasRef.current;
     const link = document.createElement("a");
@@ -89,9 +90,14 @@ const RoomPage = ({ user, socket, users }) => {
     } else if (tool == "eraser") {
       canvs.style.cursor =
         "url(https://img.icons8.com/metro/25/eraser.png)0 50 , auto";
-    } else if (tool == "rect" || tool == "eclipse" || tool == "circle" || "curve") {
+    } else if (
+      tool == "rect" ||
+      tool == "eclipse" ||
+      tool == "circle" ||
+      "curve"
+    ) {
       canvs.style.cursor = "crosshair";
-    }else if (tool == "text") {
+    } else if (tool == "text") {
       canvs.style.cursor = "crosshair";
     }
   };
@@ -372,6 +378,18 @@ const RoomPage = ({ user, socket, users }) => {
                 alt="curve"
               />
             </div>
+
+            {/* arc */}
+            <div className="tool-btn hover-tool" id="Polygon">
+              <img
+                width="30"
+                height="30"
+                onClick={() => setTool("polygon")}
+                src="https://img.icons8.com/external-flat-icons-inmotus-design/67/external-Curve-geometry-forms-flat-icons-inmotus-design.png"
+                alt="polygon"
+              />
+            </div>
+
             {/* text */}
             <div className="tool-btn hover-tool" id="text">
               <img
