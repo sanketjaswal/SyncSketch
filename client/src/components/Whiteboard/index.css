@@ -1,7 +1,7 @@
 .drawing-canvas{
     /* height: 100%; */
     /* width: 100%; */
-    cursor:url(https://img.icons8.com/external-prettycons-solid-prettycons/50/external-pencil-tools-prettycons-solid-prettycons-2.png)0 50, auto;
-    /* cursor: crosshair */
-    /* background-color: red; */
+    /* cursor:url(https://img.icons8.com/external-prettycons-solid-prettycons/50/external-pencil-tools-prettycons-solid-prettycons-2.png)0 50, auto; */
+    /* cursor: pointer; */
+    background-color: white;
 }

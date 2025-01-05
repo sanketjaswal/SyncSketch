@@ -24,13 +24,12 @@ const RoomPage = ({ user, socket, users }) => {
   const [elements, setElements] = useState([]);
   const [history, setHistory] = useState([]);
   const [fillColor, setFillColor] = useState("black");
-  const [fillStyle, setFillStyle] = useState("dashed");
+  const [fillStyle, setFillStyle] = useState(null);
   const [chatVisible, setChatVisible] = useState(false);
   const [brushsize, setBrushSize] = useState(1);
   const [roughness, setRoughness] = useState(0);
 
-
-  // Handle clearing the canvas
+  // clearing canvas
   const handleClearCanvas = () => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
@@ -43,8 +42,16 @@ const RoomPage = ({ user, socket, users }) => {
     setElements([]);
     setHistory([]);
   };
-  
-  // Handle undo action
+
+  const downloadCanvas = () => {
+    const canvas = canvasRef.current;
+    const link = document.createElement("a");
+    link.download = "whiteboard.png"; // File name for the downloaded image
+    link.href = canvas.toDataURL("image/png"); // Canvas content as a data URL
+    link.click(); // Programmatically triggers the download
+  };
+
+  // undo
   const undo = () => {
     if (elements.length > 0) {
       const lastElement = elements[elements.length - 1];
@@ -73,7 +80,7 @@ const RoomPage = ({ user, socket, users }) => {
     toolIconChange();
   }, [tool]);
 
-  // tool icon change
+  // tool cursor change
   const toolIconChange = () => {
     const canvs = document.getElementsByClassName("drawing-canvas")[0];
     if (tool == "pencil" || tool == "line") {
@@ -82,23 +89,25 @@ const RoomPage = ({ user, socket, users }) => {
     } else if (tool == "eraser") {
       canvs.style.cursor =
         "url(https://img.icons8.com/metro/25/eraser.png)0 50 , auto";
-    } else if (tool == "rect") {
+    } else if (tool == "rect" || tool == "eclipse" || tool == "circle" || "curve") {
+      canvs.style.cursor = "crosshair";
+    }else if (tool == "text") {
       canvs.style.cursor = "crosshair";
     }
   };
 
   const myFunction = () => {
     document.getElementById("myDropdown").classList.add("show");
-  }
+  };
 
-  // pattern logo change
+  // fill pattern logo change
   useEffect(() => {
     const patterIcon = document.getElementById("dropdown-value-image");
     if (fillStyle == "zigzag-line") {
       patterIcon.src = zigzagLine;
     } else if (fillStyle == "cross-hatch") {
       patterIcon.src = crossHatch;
-    } else if (fillStyle == "") {
+    } else if (fillStyle == null) {
       patterIcon.src = "https://img.icons8.com/windows/32/hand-holding.png";
     } else if (fillStyle == "dots") {
       patterIcon.src = dots;
@@ -117,8 +126,9 @@ const RoomPage = ({ user, socket, users }) => {
   return (
     <div className="app-container">
       <div className="hoverName">
-        <p className="Hnamep">hello</p>
+        <p className="Hnamep"></p>
       </div>
+      {/* logo */}
       <header className="app-header">
         <div className="loggo">
           <span className="syncc">Sync</span>
@@ -186,10 +196,13 @@ const RoomPage = ({ user, socket, users }) => {
               />
             </div>
 
-            {/* dropdown */}
+            {/* fill pattern dropdown */}
             <div className="dropdown ">
+              {/* button to access pattern picker dropdown */}
               <button
-                onClick={() => document.getElementById("myDropdown").classList.add("show")}
+                onClick={() =>
+                  document.getElementById("myDropdown").classList.add("show")
+                }
                 className="dropbtn tool-btn hover-tool"
                 id="Fill-Pattern"
               >
@@ -201,7 +214,7 @@ const RoomPage = ({ user, socket, users }) => {
                   alt="empty_1"
                 />
               </button>
-              {/*fill pattern picker */}
+              {/*all fill patterns / dropdown */}
               <div id="myDropdown" className="dropdown-content">
                 <div
                   className="drop-pattern hover-tool"
@@ -268,7 +281,6 @@ const RoomPage = ({ user, socket, users }) => {
 
           {/* tools */}
           <div className="control-buttons">
-
             {/* eraser */}
             <div
               className="tool-btn hover-tool"
@@ -333,6 +345,7 @@ const RoomPage = ({ user, socket, users }) => {
               <img
                 width="30"
                 height="30"
+                onClick={() => setTool("circle")}
                 src="https://img.icons8.com/sf-regular/30/circled.png"
                 alt="circled"
               />
@@ -340,12 +353,33 @@ const RoomPage = ({ user, socket, users }) => {
 
             {/* eclipse */}
             <div className="tool-btn hover-tool" id="Eclipse">
-            <img
+              <img
+                width="40"
+                height="20"
+                onClick={() => setTool("eclipse")}
+                src="https://img.icons8.com/sf-regular/30/circled.png"
+                alt="eclipse"
+              />
+            </div>
+
+            {/* curve */}
+            <div className="tool-btn hover-tool" id="Curve">
+              <img
                 width="30"
                 height="30"
-                onClick={() => setTool("eclipse")}
-                src="https://img.icons8.com/sf-regular/30/eclipse.png"
-                alt="eclipse"
+                onClick={() => setTool("curve")}
+                src="https://img.icons8.com/external-flat-icons-inmotus-design/67/external-Curve-geometry-forms-flat-icons-inmotus-design.png"
+                alt="curve"
+              />
+            </div>
+            {/* text */}
+            <div className="tool-btn hover-tool" id="text">
+              <img
+                width="30"
+                height="30"
+                onClick={() => setTool("text")}
+                src="https://img.icons8.com/ios-glyphs/30/paste-as-text.png"
+                alt="text"
               />
             </div>
           </div>
@@ -387,7 +421,7 @@ const RoomPage = ({ user, socket, users }) => {
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/ios-filled/50/undo.png"
+                src="https://img.icons8.com/ios-filled/30/undo.png"
                 alt="undo"
               />{" "}
             </button>
@@ -396,6 +430,7 @@ const RoomPage = ({ user, socket, users }) => {
             <button
               className="button clear hover-tool"
               id="Clear All"
+              disabled={elements.length < 1}
               onClick={handleClearCanvas}
             >
               <img
@@ -405,6 +440,21 @@ const RoomPage = ({ user, socket, users }) => {
                 alt="delete--v1"
               />{" "}
             </button>
+            {/* save button */}
+            <button
+              className="button hover-tool"
+              id="save"
+              disabled={elements.length < 1}
+              onClick={downloadCanvas}
+            >
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/ios-filled/50/save.png"
+                alt="redo"
+              />
+            </button>
+
             {/* redo */}
             <button
               className="button hover-tool"
