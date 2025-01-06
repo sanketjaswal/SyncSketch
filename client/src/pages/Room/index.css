@@ -2,6 +2,7 @@
   font-family: "Roboto", sans-serif;
   padding: 20px;
   text-align: center;
+  user-select: none;
   background: linear-gradient(to bottom, white, #3498db 80%, #ffffff);
 }
 
@@ -131,11 +132,12 @@
 }
 
 .control-item {
-  margin: 15px 0;
+  /* margin: 15px 0; */
   font-size: 0.9rem;
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
+  gap: 19px;
+  justify-content: center;
 }
 
 .control-item label {
@@ -298,9 +300,16 @@
 /*stroke color-picker */
 
 .paintHolder {
+  display: flex;
   justify-content: center;
   /* padding: 0 10px ; */
   gap: 20px;
+}
+
+.paintHolder img{
+  /* border: 1px solid white; */
+  border-radius: 5px;
+  padding: 5px;
 }
 
 #color-picker {
@@ -329,19 +338,10 @@
 
 /* fill color */
 
-.fill-container {
-  width: 95%;
-  margin: 0 auto;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  display: flex;
-}
-
 .fill-div {
-  width: inherit;
+  /* width: inherit; */
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 #fill-color-picker {
@@ -448,6 +448,8 @@
 
 .dropbtn {
   cursor: pointer;
+  border: none;
+  overflow: hidden;
 }
 
 .dropdown {

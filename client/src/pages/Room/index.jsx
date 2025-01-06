@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import "./index.css";
 import { useParams } from "react-router-dom";
+
+import "./index.css";
+import { HexColorPicker } from "react-colorful";
 
 import { toolHover } from "../../utils/hover";
 import Whiteboard from "../../components/Whiteboard";
-
+//images
 import brush from "../../assets/paintbrush.png";
 import hachure from "../../assets/hachure.png";
 import zigzagLine from "../../assets/zigzag-line.png";
@@ -13,6 +15,7 @@ import crossHatch from "../../assets/cross-hatch.png";
 import dashed from "../../assets/dashed.png";
 import sunburst from "../../assets/sunburst.png";
 import solid from "../../assets/solid.png";
+import { ColorPicker } from "../../components/ColorPicker";
 
 const RoomPage = ({ user, socket, users }) => {
   const canvasRef = useRef(null);
@@ -86,19 +89,26 @@ const RoomPage = ({ user, socket, users }) => {
     const canvs = document.getElementsByClassName("drawing-canvas")[0];
     if (tool == "pencil" || tool == "line") {
       canvs.style.cursor =
-        "url(https://img.icons8.com/external-prettycons-solid-prettycons/40/external-pencil-tools-prettycons-solid-prettycons-2.png)0 50, auto";
+        "url(https://img.icons8.com/external-prettycons-solid-prettycons/30/external-pencil-tools-prettycons-solid-prettycons-2.png)0 50, auto";
     } else if (tool == "eraser") {
       canvs.style.cursor =
         "url(https://img.icons8.com/metro/25/eraser.png)0 50 , auto";
+    } else if (tool == "highlighter") {
+      canvs.style.cursor =
+        "url(https://img.icons8.com/color/25/marker-pen.png)0 50 , auto";
+    } else if (tool == "marker") {
+      canvs.style.cursor =
+        "url(https://img.icons8.com/ios-filled/25/marker-pen.png)0 50 , auto";
     } else if (
       tool == "rect" ||
       tool == "eclipse" ||
       tool == "circle" ||
-      "curve"
+      tool == "curve" ||
+      tool == "polygon"
     ) {
       canvs.style.cursor = "crosshair";
     } else if (tool == "text") {
-      canvs.style.cursor = "crosshair";
+      canvs.style.cursor = "text";
     }
   };
 
@@ -158,31 +168,19 @@ const RoomPage = ({ user, socket, users }) => {
             <h2>{users.length} Users Online</h2>
           </div>
 
-          {/* stroke color picker */}
-          <div
-            className="control-item paintHolder hover-tool"
-            id="Stroke-color"
-          >
-            <img
-              width="30"
-              height="30"
-              src="https://img.icons8.com/dusk/30/paint-brush.png"
-              alt="paint-brush"
-              id="paint-plate"
-            />
+          <div className="control-buttons">
+            {/* stroke color picker */}
+            <div className=" paintHolder hover-tool" id="Stroke-color">
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/dusk/30/paint-brush.png"
+                alt="paint-brush"
+                id="paint-plate"
+              />
 
-            <input
-              id="color-picker"
-              type="color"
-              value={color}
-              onChange={(e) => {
-                setColor(e.target.value);
-                console.log(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="fill-container">
+              <ColorPicker setColor={setColor} color={color}></ColorPicker>
+            </div>
             {/*fill color picker */}
             <div className="fill-div paintHolder hover-tool" id="Fill-color">
               <img
@@ -191,14 +189,54 @@ const RoomPage = ({ user, socket, users }) => {
                 src="https://img.icons8.com/color/30/fill-color.png"
                 alt="fill-color"
               />
-              <input
-                id="fill-color-picker"
-                type="color"
-                value={fillColor}
-                onChange={(e) => {
-                  setFillColor(e.target.value);
-                  // console.log(e.target.value);
-                }}
+              <ColorPicker
+                setColor={setFillColor}
+                color={fillColor}
+              ></ColorPicker>
+            </div>
+
+            {/* eraser */}
+            <div
+              className="tool-btn hover-tool"
+              id="Eraser"
+              onClick={() => {
+                setTool("eraser");
+              }}
+            >
+              <img
+                width="28"
+                id="eraser"
+                height="28"
+                src="https://img.icons8.com/metro/26/eraser.png"
+                alt="eraser"
+              />
+            </div>
+
+            {/* text */}
+            <div className="tool-btn hover-tool" id="text">
+              <img
+                width="30"
+                height="30"
+                onClick={() => setTool("text")}
+                src="https://img.icons8.com/ios-glyphs/30/paste-as-text.png"
+                alt="text"
+              />
+            </div>
+
+            {/* trace */}
+            <div
+              className="tool-btn hover-tool"
+              id="Tracer"
+              onClick={() => {
+                setTool("eraser");
+              }}
+            >
+              <img
+                width="28"
+                id="Tracer"
+                height="28"
+                src="https://img.icons8.com/badges/48/multiple-stars.png"
+                alt="tracer"
               />
             </div>
 
@@ -283,26 +321,42 @@ const RoomPage = ({ user, socket, users }) => {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* tools */}
-          <div className="control-buttons">
-            {/* eraser */}
+            {/* marker */}
             <div
               className="tool-btn hover-tool"
-              id="Eraser"
+              id="Marker"
               onClick={() => {
-                setTool("eraser");
+                setTool("marker");
               }}
             >
               <img
-                width="28"
-                id="eraser"
-                height="28"
-                src="https://img.icons8.com/metro/26/eraser.png"
+                width="26"
+                id="Marker"
+                height="26"
+                src="https://img.icons8.com/ios-filled/50/marker-pen.png"
+                alt="marker"
+              />
+            </div>
+
+            {/* high lighter */}
+            <div
+              className="tool-btn hover-tool"
+              id="High Lighter"
+              onClick={() => {
+                setTool("highlighter");
+              }}
+            >
+              <img
+                width="30"
+                id="High Lighter"
+                height="30"
+                src="https://img.icons8.com/color/48/marker-pen.png"
                 alt="eraser"
               />
             </div>
+
+            {/* tools */}
 
             {/* pencil */}
             <div
@@ -368,7 +422,7 @@ const RoomPage = ({ user, socket, users }) => {
               />
             </div>
 
-            {/* curve */}
+            {/* curve
             <div className="tool-btn hover-tool" id="Curve">
               <img
                 width="30"
@@ -377,7 +431,7 @@ const RoomPage = ({ user, socket, users }) => {
                 src="https://img.icons8.com/external-flat-icons-inmotus-design/67/external-Curve-geometry-forms-flat-icons-inmotus-design.png"
                 alt="curve"
               />
-            </div>
+            </div> */}
 
             {/* arc */}
             <div className="tool-btn hover-tool" id="Polygon">
@@ -387,17 +441,6 @@ const RoomPage = ({ user, socket, users }) => {
                 onClick={() => setTool("polygon")}
                 src="https://img.icons8.com/external-flat-icons-inmotus-design/67/external-Curve-geometry-forms-flat-icons-inmotus-design.png"
                 alt="polygon"
-              />
-            </div>
-
-            {/* text */}
-            <div className="tool-btn hover-tool" id="text">
-              <img
-                width="30"
-                height="30"
-                onClick={() => setTool("text")}
-                src="https://img.icons8.com/ios-glyphs/30/paste-as-text.png"
-                alt="text"
               />
             </div>
           </div>

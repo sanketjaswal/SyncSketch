@@ -56,12 +56,12 @@ const Whiteboard = ({
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.beginPath();
-    //
-    ctx.arc(100, 100, 100, 0, 1100, 10);
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = "red";
-    ctx.stroke();
+    // ctx.beginPath();
+    // //
+    // ctx.arc(100, 100, 100, 0, 1100, 10);
+    // ctx.lineWidth = 1;
+    // ctx.strokeStyle = "red";
+    // ctx.stroke();
 
     elements.forEach((element) => {
       if (element.style == null) {
@@ -75,6 +75,28 @@ const Whiteboard = ({
           roughness: element.roughness,
         });
       }
+      //marker
+      else if (element.type === "marker") {
+        roughCanvas.linearPath(element.path, {
+          roughness: 0.2,
+          bowing: 0.1,
+          strokeWidth: 3,
+          stroke: "#ff8222" || element.stroke ,
+        });
+      }
+
+      //glow
+      else if (element.type === "highlighter") {
+        roughCanvas.linearPath(element.path, {
+          roughness: 0.2,
+          bowing: 0.1,
+          strokeWidth: 15,
+          stroke: "rgba(255, 235, 59, 0.5)",
+          fill: "rgba(255, 235, 59, 0.3)",
+          fillStyle: "solid",
+        });
+      }
+
       // curve
       else if (element.type === "curve") {
         roughCanvas.curve(element.points, {
@@ -212,6 +234,14 @@ const Whiteboard = ({
         element.type = "pencil";
         element.path = [[offsetX, offsetY]];
         break;
+      case "marker":
+        element.type = "marker";
+        element.path = [[offsetX, offsetY]];
+        break;
+      case "highlighter":
+        element.type = "highlighter";
+        element.path = [[offsetX, offsetY]];
+        break;
       case "eraser":
         element.type = "eraser";
         element.stroke = "white";
@@ -269,6 +299,8 @@ const Whiteboard = ({
       if (lastElement) {
         switch (tool) {
           case "pencil":
+          case "marker":
+          case "highlighter":
           case "eraser":
             lastElement.path.push([offsetX, offsetY]);
             break;
@@ -286,6 +318,10 @@ const Whiteboard = ({
             lastElement.width = dx;
             lastElement.height = dy;
             break;
+
+          case "polygon":
+            lastElement.points.push([offsetX, offsetY]);
+            break;
           case "arc":
             const dxArc = offsetX - lastElement.offsetX;
             const dyArc = offsetY - lastElement.offsetY;
@@ -294,6 +330,7 @@ const Whiteboard = ({
             lastElement.startAngle = 0; // Start at 0 radians
             lastElement.endAngle = Math.PI; // Half-circle for demo
             break;
+
           case "circle":
             const d = Math.sqrt(
               Math.pow(offsetX - lastElement.offsetX, 2) +
@@ -317,13 +354,16 @@ const Whiteboard = ({
     socket.emit("whiteboardData", { elements });
   };
 
+
   return (
     <div
       className="drawing-canvas"
       onMouseDown={handleMouseDown}
-      onClick={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
+      // onTouchStart={handleTouchStart}
+      // onTouchMove={handleTouchMove}
+      // onTouchEnd={handleTouchEnd}
     >
       <canvas className="canvas" ref={canvasRef} />
     </div>
