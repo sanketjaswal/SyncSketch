@@ -6,6 +6,7 @@ export const toolHover = () => {
       if (dropdown && dropdown.classList.contains("show")) {
         dropdown.classList.remove("show");
       }
+      
     });
 
     // Handle mouseover events

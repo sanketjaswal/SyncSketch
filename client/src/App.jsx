@@ -1,10 +1,12 @@
-import "./App.css";
-import Forms from "./components/Forms";
 import { Route, Routes } from "react-router-dom";
-import RoomPage from "./pages/Room";
+import { useEffect, useState } from "react";
 
 import io from "socket.io-client"
-import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+import "./App.css";
+import RoomPage from "./pages/Room";
+import Forms from "./components/Forms";
 
 const server = "https://syncsketch-backend.onrender.com"
 // const server = "http://localhost:5000";
@@ -45,30 +47,30 @@ const App = () => {
   },[])
 
 
-  const uuid = () => {
-    var S4 = () => {
-      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
-    return (
-      S4() +
-      S4() +
-      "-" +
-      S4() +
-      "-" +
-      S4() +
-      "-" +
-      S4() +
-      "-" +
-      S4() +
-      S4() +
-      S4()
-    );
-  };
+  // const uuid = () => {
+  //   var S4 = () => {
+  //     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  //   };
+  //   return (
+  //     S4() +
+  //     S4() +
+  //     "-" +
+  //     S4() +
+  //     "-" +
+  //     S4() +
+  //     "-" +
+  //     S4() +
+  //     "-" +
+  //     S4() +
+  //     S4() +
+  //     S4()
+  //   );
+  // };
 
   return (
     <div className="theContainer">
       <Routes>
-        <Route path="/" element={<Forms uuid={uuid} socket={socket} setUser={setUser} />} />
+        <Route path="/" element={<Forms uuid={uuidv4} socket={socket} setUser={setUser} />} />
         <Route path="/:roomId?" element={<RoomPage user={user} socket={socket} users={users} />} />
       </Routes>
     </div>

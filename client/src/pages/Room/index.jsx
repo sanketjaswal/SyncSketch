@@ -109,6 +109,10 @@ const RoomPage = ({ user, socket, users }) => {
       canvs.style.cursor = "crosshair";
     } else if (tool == "text") {
       canvs.style.cursor = "text";
+    } else if (tool == "select") {
+      canvs.style.cursor = "pointer";
+
+      // canvs.style.cursor = "url(https://img.icons8.com/sf-regular/28/resize-four-directions.png)0 50 , auto";
     }
   };
 
@@ -223,20 +227,20 @@ const RoomPage = ({ user, socket, users }) => {
               />
             </div>
 
-            {/* trace */}
+            {/* Select */}
             <div
               className="tool-btn hover-tool"
-              id="Tracer"
+              id="Select"
               onClick={() => {
-                setTool("eraser");
+                setTool("select");
               }}
             >
               <img
                 width="28"
-                id="Tracer"
+                id="Select"
                 height="28"
-                src="https://img.icons8.com/badges/48/multiple-stars.png"
-                alt="tracer"
+                src="https://img.icons8.com/sf-regular/48/resize-four-directions.png"
+                alt="Select"
               />
             </div>
 
@@ -254,7 +258,7 @@ const RoomPage = ({ user, socket, users }) => {
                   id="dropdown-value-image"
                   width="40"
                   height="40"
-                  src="https://img.icons8.com/windows/32/hand-holding.png"
+                  src="https://img.icons8.com/windows/40/hand-holding.png"
                   alt="empty_1"
                 />
               </button>

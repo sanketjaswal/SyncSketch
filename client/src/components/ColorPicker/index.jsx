@@ -2,9 +2,9 @@ import React, { useCallback, useState, useEffect } from "react";
 
 import "./index.css";
 
-import { HexColorPicker, HexColorInput } from "react-colorful";
+import { HexColorPicker, RgbaColorPicker, HexColorInput } from "react-colorful";
 
-export const ColorPicker = ({color, setColor}) => {
+export const ColorPicker = ({ color, setColor }) => {
   const [isOpen, toggle] = useState(false);
 
   return (

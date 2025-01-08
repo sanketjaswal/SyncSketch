@@ -58,6 +58,7 @@ Below is a list of dependencies used in the project:
 - **[React Router](https://www.npmjs.com/package/react-router-dom)**: For client-side routing within the application.
 - **[Toastify](https://www.npmjs.com/package/toastify)**: Library for customizable toast notifications in web apps.
 - **[Rough.js](https://roughjs.com/)**: Library for creating hand-drawn, sketchy graphics in web applications.
+- **[React-Colorful](https://www.npmjs.com/package/react-colorful)**: Library for custom color picker in React.
 - **[Socket.io](https://www.npmjs.com/package/scoketio)**: Library for real-time, bidirectional communication between clients and servers.
 - **[Eslint](https://www.npmjs.com/package/eslint)**: ESLint tool used to detects and fixes JavaScript code issues.
 - **[Prettier](https://www.npmjs.com/package/prettier)**: For code formatter with consistent styling.

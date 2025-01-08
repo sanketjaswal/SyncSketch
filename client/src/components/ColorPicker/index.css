@@ -1,9 +1,6 @@
-/* CP_DoFullRefresh */
 body {
   margin: 0;
-  /* padding: 280px 30px 0; */
-  font: normal 18px/1.4 Arial, sans-serif;
-  background-color: #efefef;
+  /* background-color: #efefef; */
 }
 
 .picker {
@@ -19,7 +16,6 @@ body {
   border-radius: 4px;
   cursor: pointer;
   &:before {
-    /* content: "#"; */
     position: absolute;
     top: 5px;
     left: 60px;
@@ -29,32 +25,37 @@ body {
 
 .popover {
   position: absolute;
-  /* // top: calc(100% + 2px); */
   bottom: calc(100% + 8px);
   left: 0px;
-  border-radius: 8px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  padding: 10px;
-  background-color: white;
+  /* padding: 10px; */
+  /* background-color: white; */
+  gap: 10px;
 }
 
-input {
-  display: block;
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  border-radius: 25px;
-  background: #fff;
-  outline: none;
-  font: inherit;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 14px;
-  height: 32px;
-  line-height: 32px;
-  width: 110px;
-  transition: 0.3s;
-  &:hover,
-  &:focus {
-    border-color: #3b4851;
-  }
+/* Custom layout */
+.popover .react-colorful {
+  padding: 10px;
+  border-radius: 10px;
+  background: #33333a;
+  box-shadow: 0 6px 12px #999;
+}
+
+.popover .react-colorful__saturation-pointer {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+}
+
+.popover .react-colorful__hue {
+  margin: 8px 0 0 0;
+  border-radius: 0 0 8px 8px;
+  height: 20px;
+}
+
+.popover .react-colorful__hue-pointer {
+  width: 14px;
+  height: 30px;
+  border: 2px white solid;
+  border-radius: 3px;
 }
