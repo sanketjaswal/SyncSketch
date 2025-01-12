@@ -329,7 +329,7 @@ const Whiteboard = ({
     if(ele.height < 0){
       ele.height = Math.abs(ele.height)
       ele.offsetY = ele.offsetY - ele.height
-      ele.stroke = "blue"
+      ele.stroke = "red"
     }
 
     setElements((prevElements) => [...prevElements, ele]);
@@ -472,7 +472,6 @@ const Whiteboard = ({
           const { diffX, diffY } = selectedElement;
 
           // Update the position of the selected element
-          const dx = offsetX - diffX;
           const dy = offsetY - diffY;
 
           currentElement.offsetX = dx;
