@@ -5,8 +5,12 @@ import { addUser } from "./utils/users.js";
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer);
-
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:5173", 
+    methods: ["GET", "POST"],
+  },
+});
 app.get("/", (req, res) => {
   res.send("This is a real-time application using Socket.IO");
 });
@@ -35,6 +39,13 @@ io.on("connection", (socket) => {
     socket.broadcast.to(roomId).emit("whiteboardDataResponse", data); // Broadcast to others in the room
   });
 
+  socket.on("message", (data) => {
+    if (!data) return;
+    const {message, userId, roomId} = data;
+    console.log("message :-", message, userId, roomId);
+    // socket.broadcast.to(roomId).emit("messageResponse", {message, userName});
+    io.to(roomId).emit("messageResponse", { message, userId: userId }); 
+  })
 
   socket.on("disconnect", () => {
     console.log("User disconnected");

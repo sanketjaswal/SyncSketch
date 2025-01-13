@@ -31,6 +31,32 @@ const RoomPage = ({ user, socket, users }) => {
   const [chatVisible, setChatVisible] = useState(false);
   const [brushsize, setBrushSize] = useState(1);
   const [roughness, setRoughness] = useState(0);
+  const [openChat, setOpenChat] = useState(true);
+  const [chat, setChat] = useState([]);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const handleMessageResponse = (data) => {
+      console.log("messageResponse: ", data);
+      setChat((prevChat) => [...prevChat, data]);
+    };
+
+    socket.on("messageResponse", handleMessageResponse);
+
+    return () => {
+      socket.off("messageResponse", handleMessageResponse);
+    };
+  }, [socket]);
+
+  // send message
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (message.trim() !== "") {
+      socket.emit("message", { message, userId: user.userId, roomId });
+      // setChat((prevChat) => [...prevChat, { message, user: "You" }]);
+      setMessage("");
+    }
+  };
 
   // clearing canvas
   const handleClearCanvas = () => {
@@ -543,14 +569,64 @@ const RoomPage = ({ user, socket, users }) => {
             chatVisible ? "chat-visible" : "chat-hidden"
           }`}
         >
-          {users
-            .filter((usr) => usr.roomId === roomId)
-            .map((usr, index) => (
-              <span key={index}>
-                {usr.name}
-                {user && user.userId === usr.userId && " (You)"}
-              </span>
-            ))}
+          {/* chat btn */}
+          <div
+            className="open-chat-cont"
+            onClick={() => setOpenChat(!openChat)}
+          >
+            <img
+              width="24"
+              height="24"
+              src="https://img.icons8.com/plumpy/24/chat.png"
+              alt="chat"
+            />
+            <button className="open-chat">
+              {openChat ? "Open Chat" : "Users"}
+            </button>
+          </div>
+
+          {/* chat names */}
+          <div className={` ${openChat ? "name-visible" : "name-hidden"}`}>
+            {users
+              .filter((usr) => usr.roomId === roomId)
+              .map((usr, index) => (
+                <span key={index}>
+                  {usr.name}
+                  {user && user.userId === usr.userId && " (You)"}
+                </span>
+              ))}
+          </div>
+
+          {/* chat tools */}
+          <div
+            className={`chat-tools ${
+              openChat ? "name-hidden" : "name-visible"
+            }`}
+          >
+            <div className="chat">
+              {chat.map((msg, index) => (
+                <div className={`chat-and-user ${user && user.userId === msg.userId && "msg-me" }`} key={index} id={users.find((usr) => usr.userId === msg.userId).name}>
+                  <div className="chat-user-icon">
+                    {
+                      users.find((usr) => usr.userId === msg.userId).name.charAt(0).toUpperCase()
+                    }
+                  </div>
+                  <div className="chat-bubble">
+
+                  {msg.message}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="chat-input">
+              <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <button onClick={sendMessage}>Send</button>
+            </div>
+          </div>
         </div>
         {/* whiteboard */}
         <div className="canvas-container">

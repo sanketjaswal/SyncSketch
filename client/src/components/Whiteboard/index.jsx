@@ -526,7 +526,7 @@ const Whiteboard = ({
 
       return updatedElements;
     });
-    console.log(elements[elements.length -1])
+    // console.log(elements[elements.length -1])
   };
 
   const handleMouseUp = () => {
