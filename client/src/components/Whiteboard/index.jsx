@@ -23,7 +23,10 @@ const Whiteboard = ({
 }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const [selectedElement, setSelectedElement] = useState(null);
+  const [resizeHandle, setResizeHandle] = useState(null);
 
+
+  // Whiteboard resonse 
   useEffect(() => {
     socket.on("whiteboardDataResponse", (data) => {
       setElements(data.elements);
@@ -34,6 +37,7 @@ const Whiteboard = ({
     };
   }, [socket, setElements]);
 
+  // canvas ref Useeffect
   useEffect(() => {
     const canvas = canvasRef.current;
     canvas.height = window.innerHeight;
@@ -53,6 +57,7 @@ const Whiteboard = ({
     ctxRef.current.strokeStyle = color;
   }, [color]);
 
+  // draw elements
   const drawElements = (elements) => {
     const canvas = canvasRef.current;
     const ctx = ctxRef.current;
@@ -210,15 +215,8 @@ const Whiteboard = ({
   useEffect(() => {
     drawElements(elements);
   }, [elements, selectedElement]);
-  
-  // useLayoutEffect(()=>{
-    
-  //   if(elements){
-  //     elementCheck();
-  //   }
-  // },[elements])
-  
-  // get selected elemnets poition
+
+  // get selected elemnets position
   const getElementAtPosition = (x, y) => {
     for (let i = elements.length - 1; i >= 0; i--) {
       const element = elements[i];
@@ -289,11 +287,9 @@ const Whiteboard = ({
     });
   };
 
-  const [resizeHandle, setResizeHandle] = useState(null);
 
   // get resize handle position
   const getResizeHandleAtPosition = (x, y, element) => {
-
     const { offsetX, offsetY, width, height } = element;
     const handleSize = 50;
 
@@ -318,23 +314,23 @@ const Whiteboard = ({
     return null;
   };
 
-// element + / - check
+  // element + / - check
   const elementCheck = () => {
-    let ele = elements[elements.length -1]
-    if(ele.width < 0){
-      ele.width = Math.abs(ele.width)
-      ele.offsetX = ele.offsetX - ele.width
-      ele.stroke = "red"
+    let ele = elements[elements.length - 1];
+    if (ele.width < 0) {
+      ele.width = Math.abs(ele.width);
+      ele.offsetX = ele.offsetX - ele.width;
+      ele.stroke = "red";
     }
-    if(ele.height < 0){
-      ele.height = Math.abs(ele.height)
-      ele.offsetY = ele.offsetY - ele.height
-      ele.stroke = "red"
+    if (ele.height < 0) {
+      ele.height = Math.abs(ele.height);
+      ele.offsetY = ele.offsetY - ele.height;
+      ele.stroke = "red";
     }
 
     setElements((prevElements) => [...prevElements, ele]);
-    console.log(ele)
-  }
+    // console.log(ele)
+  };
 
   // mouse down
   const handleMouseDown = (e) => {
@@ -443,6 +439,7 @@ const Whiteboard = ({
     setIsDrawing(true);
   };
 
+  // mouse Move
   const handleMouseMove = (e) => {
     const { offsetX, offsetY } = e.nativeEvent;
 
@@ -459,16 +456,16 @@ const Whiteboard = ({
             // console.log("resizingHandle " + resizeHandle);
             document.getElementsByClassName("drawing-canvas")[0].style.cursor =
               "text";
-              currentElement.width += currentElement.offsetX - offsetX;
-              currentElement.offsetX = offsetX;
-              currentElement.height += currentElement.offsetY - offsetY;
-              currentElement.offsetY = offsetY;
+            currentElement.width += currentElement.offsetX - offsetX;
+            currentElement.offsetX = offsetX;
+            currentElement.height += currentElement.offsetY - offsetY;
+            currentElement.offsetY = offsetY;
           } else if (resizeHandle == "top-right") {
           } else if (resizeHandle == "bottom-left") {
           } else if (resizeHandle == "bottom-right") {
           }
         } else {
-          console.log(currentElement);
+          // console.log(currentElement);
           const { diffX, diffY } = selectedElement;
 
           // Update the position of the selected element
@@ -520,7 +517,6 @@ const Whiteboard = ({
               break;
           }
           // currentElement = elementCheck(currentElement)
-
         }
       }
 
@@ -543,9 +539,6 @@ const Whiteboard = ({
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      // onTouchStart={handleTouchStart}
-      // onTouchMove={handleTouchMove}
-      // onTouchEnd={handleTouchEnd}
     >
       <canvas className="canvas" ref={canvasRef} />
     </div>

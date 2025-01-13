@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import "./index.css";
-import { HexColorPicker } from "react-colorful";
-
 import { toolHover } from "../../utils/hover";
+import { ColorPicker } from "../../components/ColorPicker";
 import Whiteboard from "../../components/Whiteboard";
+
 //images
 import brush from "../../assets/paintbrush.png";
 import hachure from "../../assets/hachure.png";
@@ -15,7 +15,6 @@ import crossHatch from "../../assets/cross-hatch.png";
 import dashed from "../../assets/dashed.png";
 import sunburst from "../../assets/sunburst.png";
 import solid from "../../assets/solid.png";
-import { ColorPicker } from "../../components/ColorPicker";
 
 const RoomPage = ({ user, socket, users }) => {
   const canvasRef = useRef(null);
@@ -35,14 +34,12 @@ const RoomPage = ({ user, socket, users }) => {
   const [chat, setChat] = useState([]);
   const [message, setMessage] = useState("");
 
+  // message Response useEffect
   useEffect(() => {
     const handleMessageResponse = (data) => {
-      console.log("messageResponse: ", data);
       setChat((prevChat) => [...prevChat, data]);
     };
-
     socket.on("messageResponse", handleMessageResponse);
-
     return () => {
       socket.off("messageResponse", handleMessageResponse);
     };
@@ -182,7 +179,9 @@ const RoomPage = ({ user, socket, users }) => {
         </div>
       </header>
 
+      {/* below header */}
       <div className="below-header">
+        {/* tool station */}
         <div
           className="controls controls-bar"
           onMouseOver={(e) => toolHover(e)}
@@ -605,16 +604,20 @@ const RoomPage = ({ user, socket, users }) => {
           >
             <div className="chat">
               {chat.map((msg, index) => (
-                <div className={`chat-and-user ${user && user.userId === msg.userId && "msg-me" }`} key={index} id={users.find((usr) => usr.userId === msg.userId).name}>
+                <div
+                  className={`chat-and-user ${
+                    user && user.userId === msg.userId && "msg-me"
+                  }`}
+                  key={index}
+                  id={users.find((usr) => usr.userId === msg.userId).name}
+                >
                   <div className="chat-user-icon">
-                    {
-                      users.find((usr) => usr.userId === msg.userId).name.charAt(0).toUpperCase()
-                    }
+                    {users
+                      .find((usr) => usr.userId === msg.userId)
+                      .name.charAt(0)
+                      .toUpperCase()}
                   </div>
-                  <div className="chat-bubble">
-
-                  {msg.message}
-                  </div>
+                  <div className="chat-bubble">{msg.message}</div>
                 </div>
               ))}
             </div>
