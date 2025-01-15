@@ -25,8 +25,13 @@ const Whiteboard = ({
   const [selectedElement, setSelectedElement] = useState(null);
   const [resizeHandle, setResizeHandle] = useState(null);
 
+  const vertices = [
+    [50, 300], // Vertex 1 (x, y)
+    [200, 50], // Vertex 2 (x, y)
+    [350, 300], // Vertex 3 (x, y)
+  ];
 
-  // Whiteboard resonse 
+  // Whiteboard resonse
   useEffect(() => {
     socket.on("whiteboardDataResponse", (data) => {
       setElements(data.elements);
@@ -199,6 +204,16 @@ const Whiteboard = ({
           fillStyle: element.style,
         });
       }
+      // triangle
+      else if (element.type === "triangle") {
+        roughCanvas.polygon(element.points, {
+          stroke: element.stroke,
+          strokeWidth: element.strokeWidth,
+          roughness: element.roughness,
+          fill: element.fill,
+          fillStyle: element.style,
+        });
+      }
       // Text
       else if (element.type === "text") {
         ctx.font = `${element.fontSize || 16}px Arial`;
@@ -275,7 +290,7 @@ const Whiteboard = ({
       { x: offsetX + width, y: offsetY + height }, // Bottom-right
     ];
 
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = "red";
 
     handles.forEach(({ x, y }) => {
       ctx.fillRect(
@@ -287,6 +302,9 @@ const Whiteboard = ({
     });
   };
 
+  useEffect(() => {
+    console.log("selectedElement", selectedElement);
+  }, [selectedElement]);
 
   // get resize handle position
   const getResizeHandleAtPosition = (x, y, element) => {
@@ -352,6 +370,7 @@ const Whiteboard = ({
       const diffY = offsetY - topElement.offsetY;
 
       setSelectedElement({ ...topElement, diffX, diffY });
+
       // Add it to topmost place
       setElements((prevElements) => [...prevElements, topElement]);
 
@@ -419,6 +438,10 @@ const Whiteboard = ({
           element.type = "polygon";
           element.points = [[offsetX, offsetY]];
           break;
+        case "triangle":
+          element.type = "triangle";
+          element.points = [[offsetX, offsetY]];
+          break;
         case "circle":
           element.type = "circle";
           break;
@@ -461,8 +484,16 @@ const Whiteboard = ({
             currentElement.height += currentElement.offsetY - offsetY;
             currentElement.offsetY = offsetY;
           } else if (resizeHandle == "top-right") {
+            currentElement.width = offsetX - currentElement.offsetX;
+            currentElement.height += currentElement.offsetY - offsetY;
+            currentElement.offsetY = offsetY;
           } else if (resizeHandle == "bottom-left") {
+            currentElement.width += currentElement.offsetX - offsetX;
+            currentElement.offsetX = offsetX;
+            currentElement.height = offsetY - currentElement.offsetY;
           } else if (resizeHandle == "bottom-right") {
+            currentElement.width = offsetX - currentElement.offsetX;
+            currentElement.height = offsetY - currentElement.offsetY;
           }
         } else {
           // console.log(currentElement);
@@ -470,6 +501,7 @@ const Whiteboard = ({
 
           // Update the position of the selected element
           const dy = offsetY - diffY;
+          const dx = offsetX - diffX;
 
           currentElement.offsetX = dx;
           currentElement.offsetY = dy;
@@ -505,6 +537,18 @@ const Whiteboard = ({
               currentElement.points.push([offsetX, offsetY]);
               break;
 
+            case "triangle":
+              const startX = currentElement.points[0][0];
+              const startY = currentElement.points[0][1];
+            
+              // Define the triangle's vertices dynamically
+              const vertex1 = [startX, startY];
+              const vertex2 = [offsetX, offsetY];
+              const vertex3 = [2 * startX - offsetX, offsetY]; // Symmetric point
+            
+              currentElement.points = [vertex1, vertex2, vertex3];
+            break
+
             case "circle":
               const d = Math.sqrt(
                 Math.pow(offsetX - currentElement.offsetX, 2) +
@@ -528,6 +572,7 @@ const Whiteboard = ({
   const handleMouseUp = () => {
     setIsDrawing(false);
     elementCheck();
+    setResizeHandle(null);
 
     // setSelectedElement(null);
     socket.emit("whiteboardData", { elements });

@@ -194,7 +194,7 @@ const RoomPage = ({ user, socket, users }) => {
               src="https://img.icons8.com/?size=100&id=36389&format=png&color=ffffff"
               alt="User Menu Icon"
             />
-            <h2>{users.length} Users Online</h2>
+            <h2>{users.filter((usr) => usr.roomId === roomId).length} Users Online</h2>
           </div>
 
           <div className="control-buttons">
@@ -440,6 +440,17 @@ const RoomPage = ({ user, socket, users }) => {
               />
             </div>
 
+            {/* triangle */}
+            <div className="tool-btn hover-tool" id="Triangle">
+              <img
+                width="30"
+                height="30"
+                onClick={() => setTool("triangle")}
+                src="https://img.icons8.com/material-outlined/24/triangle-stroked.png"
+                alt="eclipse"
+              />
+            </div>
+
             {/* eclipse */}
             <div className="tool-btn hover-tool" id="Eclipse">
               <img
@@ -450,6 +461,7 @@ const RoomPage = ({ user, socket, users }) => {
                 alt="eclipse"
               />
             </div>
+
 
             {/* curve
             <div className="tool-btn hover-tool" id="Curve">
@@ -462,13 +474,13 @@ const RoomPage = ({ user, socket, users }) => {
               />
             </div> */}
 
-            {/* arc */}
+            {/* polygon */}
             <div className="tool-btn hover-tool" id="Polygon">
               <img
                 width="30"
                 height="30"
                 onClick={() => setTool("polygon")}
-                src="https://img.icons8.com/external-flat-icons-inmotus-design/67/external-Curve-geometry-forms-flat-icons-inmotus-design.png"
+                src="https://img.icons8.com/ios-filled/50/polygon.png"
                 alt="polygon"
               />
             </div>
