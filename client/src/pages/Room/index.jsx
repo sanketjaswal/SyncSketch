@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import PropTypes from 'prop-types';
 import { useParams } from "react-router-dom";
 
 import "./index.css";
@@ -126,7 +127,7 @@ const RoomPage = ({ user, socket, users }) => {
       tool == "rect" ||
       tool == "eclipse" ||
       tool == "circle" ||
-      tool == "curve" ||
+      tool == "triangle" ||
       tool == "polygon"
     ) {
       canvs.style.cursor = "crosshair";
@@ -139,9 +140,9 @@ const RoomPage = ({ user, socket, users }) => {
     }
   };
 
-  const myFunction = () => {
-    document.getElementById("myDropdown").classList.add("show");
-  };
+  // const myFunction = () => {
+  //   document.getElementById("myDropdown").classList.add("show");
+  // };
 
   // fill pattern logo change
   useEffect(() => {
@@ -662,6 +663,11 @@ const RoomPage = ({ user, socket, users }) => {
       </div>
     </div>
   );
+};
+RoomPage.propTypes = {
+  user: PropTypes.object.isRequired,
+  socket: PropTypes.object.isRequired,
+  users: PropTypes.array.isRequired,
 };
 
 export default RoomPage;

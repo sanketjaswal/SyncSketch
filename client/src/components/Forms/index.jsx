@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import CreateRoomForm from "./CreateRoomForm";
 import "./index.css";
 import JoinRoomForm from "./JoinRoomForm";
@@ -70,6 +71,11 @@ const Forms = ({ uuid, socket, setUser }) => {
       </div>
     </div>
   );
+};
+Forms.propTypes = {
+  uuid: PropTypes.string.isRequired,
+  socket: PropTypes.object.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default Forms;
