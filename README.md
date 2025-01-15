@@ -94,20 +94,20 @@ Easily choose from a spectrum of colors to enhance your creative projects.
 ### `Sketching Tools`
 
 Available tools for all your creative needs:
-   - **✎ Pencil** - Freehand drawing tool.
-   - **╴Line** - Draw straight lines with precision.
+   - **𓂃🖌 Pencil** - Freehand drawing tool.
+   - **― Line** - Draw straight lines with precision.
+   - **🖍 High lighter** - Semi-transparent highlight effect.
+   - **🖊 Marker** - Bold, marker-like strokes.
    - **▭ Quadrilateral** - Shape with four sides. 
    - **△ Triangle** - Shape with three sides.
    - **○ Circle** - Perfect circle shape.
    - **⬭ Eclipse** - Shape of uneven circle.
    - **⬡ Polygon** - Shape with multiple sides.
    - **☆ Star** - A Star shape.
-   - **High lighter** - Semi-transparent highlight effect.
-   - **Marker** - Bold, marker-like strokes.
-   - **Eraser** - Erase unwanted drawings.
-   - **Select** - Select and manipulate drawn elements.
-   - **Text** -  Add text to the canvas.
-   - **Fill pattern** - Apply patterns to shapes fill.
+   - **☑ Select** - Select and manipulate drawn elements.
+   - **🅰Text** -  Add text to the canvas.
+   - **🗑 Eraser** - Erase unwanted drawings.
+   - **♒︎ Fill pattern** - Apply patterns to shapes fill.
    
 > More tools to be added in coming updates.
 
