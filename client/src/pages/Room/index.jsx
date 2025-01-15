@@ -464,16 +464,16 @@ const RoomPage = ({ user, socket, users }) => {
             </div>
 
 
-            {/* curve
-            <div className="tool-btn hover-tool" id="Curve">
+            {/* curve */}
+            <div className="tool-btn hover-tool" id="Star">
               <img
                 width="30"
                 height="30"
-                onClick={() => setTool("curve")}
-                src="https://img.icons8.com/external-flat-icons-inmotus-design/67/external-Curve-geometry-forms-flat-icons-inmotus-design.png"
-                alt="curve"
+                onClick={() => setTool("star")}
+                src="https://img.icons8.com/material-outlined/24/star--v2.png"
+                alt="star"
               />
-            </div> */}
+            </div>
 
             {/* polygon */}
             <div className="tool-btn hover-tool" id="Polygon">

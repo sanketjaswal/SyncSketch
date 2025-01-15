@@ -66,7 +66,6 @@ export const drawElements = (
         element.height,
         // 200,200
         {
-          disableMultiStroke: true,
           stroke: element.stroke,
           strokeWidth: element.strokeWidth,
           roughness: element.roughness,
@@ -75,6 +74,16 @@ export const drawElements = (
         }
       );
     }
+    // star
+    else if (element.type === "star") {
+        roughCanvas.polygon(element.points, {
+          stroke: element.stroke,
+          strokeWidth: element.strokeWidth,
+          roughness: element.roughness,
+          fill: element.fill,
+          fillStyle: element.style,
+        });
+      }
     // line
     else if (element.type === "line") {
       roughCanvas.line(
