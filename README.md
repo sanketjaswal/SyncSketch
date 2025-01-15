@@ -4,20 +4,20 @@
 
 The **syncSketch** Application is a Multi-User Real-Time Whiteboard Application allows users to collaboratively draw, write, and interact on a shared canvas in real-time. Built using modern web technologies, the application leverages WebSockets for instant updates and seamless collaboration between users.
 
-## Application Link
+### 🔗 Application Link
 
 [https://syncsketch-frontend.onrender.com](https://syncsketch-frontend.onrender.com)
 
-## Features
+## 🌟 Key Features
 
 - **Multi-User Platform** : Multiple users can simultaneously draw, erase and chat on the whiteboard.
 - **Real-Time Collaboration** : Changes made by one user are instantly reflected for all connected users.
 - **Drawing Tools** : A variety of tools including freehand drawing, shapes, eraser, undo/redo and color selection.
 - **WebSocket Integration** : Broadcast events like drawing actions, erasing and chat messages in real-time.
-- **Room Authorisation** : Unique room code for user authorisation.
+- **Room Authorisation** : Each session has a unique room code for secure user entry.
 
 
-## Setup Instructions
+## 🔧 Setup Instructions
 
 ### 1. Clone the repository
 
@@ -50,7 +50,7 @@ This will run the app in development mode in http://localhost:3000.
 npm run build
 ```
 
-## Dependencies
+## 🛠️ Dependencies
 
 Below is a list of dependencies used in the project:
 
@@ -63,63 +63,56 @@ Below is a list of dependencies used in the project:
 - **[Eslint](https://www.npmjs.com/package/eslint)**: ESLint tool used to detects and fixes JavaScript code issues.
 - **[Prettier](https://www.npmjs.com/package/prettier)**: For code formatter with consistent styling.
 
-## Features
+## 🎨 Features Breakdown
 
 ### `Room` 
 
 A room is a unique identifier that groups users for collaborative interactions within a specific session.
 
-### `Create Room`
-
-To create a room -
+- `Create Room`
    - Define the User name.
    - Generate a unique room code.
    - Create a room. 
    - Room create will be joined to the new room.
  
-> Room creater can share the room ID to the other users.
+> Room creater will share the room ID to the other users.
 
-### `Join Room`
-
-To join a room -
+- `Join Room`
    - Define the User name.
    - Enter the unique room code.
    - Join the room. 
    - New user will be joined to the room.
 
-### `Whiteboard`
+### `Interactive Whiteboard`
 
-A whiteboard is an interactive canvas where users can draw and collaborate in real-time, often used for brainstorming, teaching, or creative projects.
+An interactive canvas where you can draw, brainstorm, and collaborate with your team in real-time!
 
 ### `Color Picker`
 
-Color picker allows users to select and customize colors for their drawing tools, enhancing the creative experience with a range of colors and shades.
+Easily choose from a spectrum of colors to enhance your creative projects.
 
-### `Sketch Tools`
+### `Sketching Tools`
 
-Sketching tools provide users with various options of tools to create and modify drawings with different styles and effects.
-Tools available in Application -
-   - **Pencil** - To draw free hand drawing.
-   - **Marker** - To draw free hand with Marker.
-   - **High lighter** - To draw free hand with highlighter.
-   - **Line** - To draw a straight line.
-   - **Quadrilateral** - To draw a shape with four sides.
-   - **Triangle** -  To draw a shape with three sides.
-   - **Circle** - To draw a perfect circle shape.
-   - **Eclipse** - To draw an uneven circle shape.
-   - **Polygon** - To draw a shape with multiple sides.
-   - **Eraser** - To erase the drawings in the canvas.
-   - **Select** - To select the shapes for moving and resizing them.
-   - **Text** - To add text to the canvas.
-   - **Fill pattern** - To add filling pattern in the shapes.
+Available tools for all your creative needs:
+   - **Pencil** - Freehand drawing tool.
+   - **Marker** - Bold, marker-like strokes.
+   - **High lighter** - Semi-transparent highlight effect.
+   - **Line** - Draw straight lines with precision.
+   - **Quadrilateral** - Shape with four sides.
+   - **Triangle** - Shape with three sides.
+   - **Circle** - Perfect circle shape.
+   - **Eclipse** - Shape of uneven circle.
+   - **Polygon** - Shape with multiple sides.
+   - **Eraser** - Erase unwanted drawings.
+   - **Select** - Select and manipulate drawn elements.
+   - **Text** -  Add text to the canvas.
+   - **Fill pattern** - Apply patterns to shapes fill.
    
-
-
 > More tools to be added in coming updates.
 
 ### `Draw`
 
-To do sketching follow these steps -
+To draw on the whiteboard -
    - Chosse your desired tool and color.
    - Press the mouse click button.
    - Hold the click and Drag the mouse to your desire. 
@@ -127,13 +120,13 @@ To do sketching follow these steps -
 
 ### `Undo / Redo`
 
-Undo and Redo allow users to revert or reapply their previous actions, providing flexibility and control over their artwork.
+Revert or reapply your actions easily using Undo and Redo.
 
 ### `Clear Canvas`
 
-Clear Canvas allows users to erase all content on the canvas, providing a fresh workspace for new drawings.
+Wipe the slate clean with the Clear Canvas option to start fresh.
 
-## Code Structure
+## 🗂️ Code Structure
 
 ```shell
  client ──
@@ -144,8 +137,11 @@ Clear Canvas allows users to erase all content on the canvas, providing a fresh 
   │   └── index.jsx                 # Page to start the application
   |
   ├── /assets                       # Includes assets for application
-  │
+  |
+  ├── /utils                        # Includes utility functions of application
+  |
   ├── App.jsx                       # Main component that houses the layout
+  |
   ├── App.css                       # Global CSS file
   │
   └── index.html                    # Main index.html file
@@ -154,12 +150,16 @@ server ──
   ├── /utils                        # Includes utilities for server
   |
   ├── server.js                     # Main file for start server 
-  │
+  |
   └── .env                          # Includes the environmental variables
 ```
 
 
 
-# Conclusion
+# 🏁 Conclusion
 
-This whiteboard application is ideal for remote learning, brainstorming sessions, and team collaboration, providing an interactive and engaging platform for users to work together in real-time.
+Whether you're collaborating on a team project, brainstorming new ideas, or teaching a lesson, syncSketch makes remote collaboration fun and interactive. Join the creative revolution and start sketching in real-time today!
+
+#
+
+Feel free to reach out if you have any questions or suggestions. Happy sketching! ✍️
