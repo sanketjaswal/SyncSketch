@@ -100,8 +100,20 @@ Color picker allows users to select and customize colors for their drawing tools
 Sketching tools provide users with various options of tools to create and modify drawings with different styles and effects.
 Tools available in Application -
    - **Pencil** - To draw free hand drawing.
+   - **Marker** - To draw free hand with Marker.
+   - **High lighter** - To draw free hand with highlighter.
    - **Line** - To draw a straight line.
    - **Quadrilateral** - To draw a shape with four sides.
+   - **Triangle** -  To draw a shape with three sides.
+   - **Circle** - To draw a perfect circle shape.
+   - **Eclipse** - To draw an uneven circle shape.
+   - **Polygon** - To draw a shape with multiple sides.
+   - **Eraser** - To erase the drawings in the canvas.
+   - **Select** - To select the shapes for moving and resizing them.
+   - **Text** - To add text to the canvas.
+   - **Fill pattern** - To add filling pattern in the shapes.
+   
+
 
 > More tools to be added in coming updates.
 
