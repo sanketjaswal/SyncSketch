@@ -379,7 +379,7 @@
 }
 
 #eraser {
-  transform: rotateZ(110deg);
+  /* transform: rotateZ(110deg); */
   color: red;
 }
 

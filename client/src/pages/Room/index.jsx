@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 
 import "./index.css";
@@ -16,6 +16,7 @@ import crossHatch from "../../assets/cross-hatch.png";
 import dashed from "../../assets/dashed.png";
 import sunburst from "../../assets/sunburst.png";
 import solid from "../../assets/solid.png";
+import { ToolButton } from "../../components/ToolBtn";
 
 const RoomPage = ({ user, socket, users }) => {
   const canvasRef = useRef(null);
@@ -134,15 +135,9 @@ const RoomPage = ({ user, socket, users }) => {
     } else if (tool == "text") {
       canvs.style.cursor = "text";
     } else if (tool == "select") {
-      canvs.style.cursor = "pointer";
-
-      // canvs.style.cursor = "url(https://img.icons8.com/sf-regular/28/resize-four-directions.png)0 50 , auto";
+      canvs.style.cursor = "url(https://img.icons8.com/sf-regular/28/resize-four-directions.png)0 50 , auto";
     }
   };
-
-  // const myFunction = () => {
-  //   document.getElementById("myDropdown").classList.add("show");
-  // };
 
   // fill pattern logo change
   useEffect(() => {
@@ -172,7 +167,7 @@ const RoomPage = ({ user, socket, users }) => {
       <div className="hoverName">
         <p className="Hnamep"></p>
       </div>
-      {/* logo */}
+      {/* LOGO */}
       <header className="app-header">
         <div className="loggo">
           <span className="syncc">Sync</span>
@@ -180,22 +175,24 @@ const RoomPage = ({ user, socket, users }) => {
         </div>
       </header>
 
-      {/* below header */}
+      {/* BELOW HEADER */}
       <div className="below-header">
-        {/* tool station */}
+        {/* TOOL STATION */}
         <div
           className="controls controls-bar"
           onMouseOver={(e) => toolHover(e)}
         >
           <img className="controls-bgi" src={brush}></img>
-          {/* chat button */}
+          {/* CHAT BUTTON */}
           <div className="control-item user-button" onClick={toggleUserchat}>
             <img
               className="menu-icon"
               src="https://img.icons8.com/?size=100&id=36389&format=png&color=ffffff"
               alt="User Menu Icon"
             />
-            <h2>{users.filter((usr) => usr.roomId === roomId).length} Users Online</h2>
+            <h2>
+              {users.filter((usr) => usr.roomId === roomId).length} Users Online
+            </h2>
           </div>
 
           <div className="control-buttons">
@@ -225,52 +222,31 @@ const RoomPage = ({ user, socket, users }) => {
               ></ColorPicker>
             </div>
 
-            {/* eraser */}
-            <div
-              className="tool-btn hover-tool"
-              id="Eraser"
-              onClick={() => {
-                setTool("eraser");
-              }}
-            >
-              <img
-                width="28"
-                id="eraser"
-                height="28"
-                src="https://img.icons8.com/metro/26/eraser.png"
-                alt="eraser"
-              />
-            </div>
+            {/* ERASER */}
+            <ToolButton
+              tool="eraser"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/metro/26/eraser.png"
+            ></ToolButton>
 
-            {/* text */}
-            <div className="tool-btn hover-tool" id="text">
-              <img
-                width="30"
-                height="30"
-                onClick={() => setTool("text")}
-                src="https://img.icons8.com/ios-glyphs/30/paste-as-text.png"
-                alt="text"
-              />
-            </div>
+            {/* TEXT */}
+            <ToolButton
+              tool="text"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/ios-glyphs/30/paste-as-text.png"
+            ></ToolButton>
 
-            {/* Select */}
-            <div
-              className="tool-btn hover-tool"
-              id="Select"
-              onClick={() => {
-                setTool("select");
-              }}
-            >
-              <img
-                width="28"
-                id="Select"
-                height="28"
-                src="https://img.icons8.com/sf-regular/48/resize-four-directions.png"
-                alt="Select"
-              />
-            </div>
+            {/* SELECT */}
+            <ToolButton
+              tool="select"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/sf-regular/48/resize-four-directions.png"
+            ></ToolButton>
 
-            {/* fill pattern dropdown */}
+            {/* FILL PATTERN DROPDOWN */}
             <div className="dropdown ">
               {/* button to access pattern picker dropdown */}
               <button
@@ -288,203 +264,156 @@ const RoomPage = ({ user, socket, users }) => {
                   alt="empty_1"
                 />
               </button>
-              {/*all fill patterns / dropdown */}
+              {/*ALL FILL PATTERNS / DROPDOWN */}
               <div id="myDropdown" className="dropdown-content">
-                <div
-                  className="drop-pattern hover-tool"
-                  id="Hachure"
-                  onClick={() => setFillStyle("hachure")}
-                >
-                  <img src={hachure}></img>
-                </div>
-                <div
-                  className="drop-pattern hover-tool"
-                  id="zigzag-line"
-                  onClick={() => setFillStyle("zigzag-line")}
-                >
-                  <img src={zigzagLine}></img>
-                </div>
-                <div
-                  className="drop-pattern  hover-tool"
-                  id="dots"
-                  onClick={() => setFillStyle("dots")}
-                >
-                  <img src={dots}></img>
-                </div>
-                <div
-                  className="drop-pattern  hover-tool"
-                  id="cross-hatch"
-                  onClick={() => setFillStyle("cross-hatch")}
-                >
-                  <img src={crossHatch}></img>
-                </div>
-                <div
-                  className="drop-pattern  hover-tool"
-                  id="dashed "
-                  onClick={() => setFillStyle("dashed")}
-                >
-                  <img src={dashed}></img>
-                </div>
-                <div
-                  className="drop-pattern  hover-tool"
-                  id=" sunburst"
-                  onClick={() => setFillStyle("sunburst")}
-                >
-                  <img src={sunburst}></img>
-                </div>
-                <div
-                  className="drop-pattern  hover-tool"
-                  id="solid "
-                  onClick={() => setFillStyle("solid")}
-                ></div>
-                <div
-                  className="drop-pattern  hover-tool"
-                  id="Remove"
-                  onClick={() => setFillStyle(null)}
-                >
-                  <img
-                    width="28"
-                    height="28"
-                    src="https://img.icons8.com/windows/32/hand-holding.png"
-                    alt="empty_1"
-                  ></img>
-                </div>
+                {/* HACHURE */}
+                <ToolButton
+                  tool="hachure"
+                  btnType="drop-pattern"
+                  onClick={setFillStyle}
+                  icon={hachure}
+                ></ToolButton>
+                
+                {/* ZIGZAG LINE */}
+                <ToolButton
+                  tool="zigzag-line"
+                  btnType="drop-pattern"
+                  onClick={setFillStyle}
+                  icon={zigzagLine}
+                ></ToolButton>
+                
+                {/* DOTS */}
+                <ToolButton
+                  tool="dots"
+                  btnType="drop-pattern"
+                  onClick={setFillStyle}
+                  icon={dots}
+                ></ToolButton>
+                
+                {/* CROSS HATCH */}
+                <ToolButton
+                  tool="cross-hatch"
+                  btnType="drop-pattern"
+                  onClick={setFillStyle}
+                  icon={crossHatch}
+                ></ToolButton>
+                
+                {/* DASHED */}
+                <ToolButton
+                  tool="dashed"
+                  btnType="drop-pattern"
+                  onClick={setFillStyle}
+                  icon={dashed}
+                ></ToolButton>
+                
+                {/* SUNBURST */}
+                <ToolButton
+                  tool="sunburst"
+                  btnType="drop-pattern"
+                  onClick={setFillStyle}
+                  icon={sunburst}
+                ></ToolButton>
+               
+                {/* SOLID */}
+                <ToolButton
+                  tool="solid"
+                  btnType="drop-pattern"
+                  onClick={setFillStyle}
+                  icon={solid}
+                ></ToolButton>
+                
+                {/* REMOVE */}
+                <ToolButton
+                  tool={null}
+                  btnType="drop-pattern"
+                  onClick={setFillStyle}
+                  icon="https://img.icons8.com/windows/32/hand-holding.png"
+                ></ToolButton>
               </div>
             </div>
 
-            {/* marker */}
-            <div
-              className="tool-btn hover-tool"
-              id="Marker"
-              onClick={() => {
-                setTool("marker");
-              }}
-            >
-              <img
-                width="26"
-                id="Marker"
-                height="26"
-                src="https://img.icons8.com/ios-filled/50/marker-pen.png"
-                alt="marker"
-              />
-            </div>
-
-            {/* high lighter */}
-            <div
-              className="tool-btn hover-tool"
-              id="High Lighter"
-              onClick={() => {
-                setTool("highlighter");
-              }}
-            >
-              <img
-                width="30"
-                id="High Lighter"
-                height="30"
-                src="https://img.icons8.com/color/48/marker-pen.png"
-                alt="eraser"
-              />
-            </div>
-
             {/* tools */}
+            {/* MARKER */}
+            <ToolButton
+              tool="marker"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/ios-filled/50/marker-pen.png"
+            ></ToolButton>
 
-            {/* pencil */}
-            <div
-              className="tool-btn hover-tool"
-              id="Pencil"
-              onClick={() => setTool("pencil")}
-            >
-              <img
-                width="30"
-                height="30"
-                src="https://img.icons8.com/external-itim2101-fill-itim2101/64/1A1A1A/external-pen-school-stationery-itim2101-fill-itim2101.png"
-                alt="external-pen-school-stationery-itim2101-fill-itim2101"
-              />
-            </div>
+            {/* HIGH LIGHTER */}
+            <ToolButton
+              tool="highlighter"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/color/48/marker-pen.png"
+            ></ToolButton>
 
-            {/* Line */}
-            <div
-              className="tool-btn hover-tool"
-              id="Line"
-              onClick={() => setTool("line")}
-            >
-              <img
-                width="30"
-                height="30"
-                src="https://img.icons8.com/ios/50/ruler.png"
-                alt="ruler"
-              />
-            </div>
+            {/* PENCIL */}
+            <ToolButton
+              tool="pencil"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/external-itim2101-fill-itim2101/64/1A1A1A/external-pen-school-stationery-itim2101-fill-itim2101.png"
+            ></ToolButton>
 
-            {/* Rectangle */}
-            <div
-              className="tool-btn hover-tool"
-              id="Rectangle"
-              onClick={() => setTool("rect")}
-            >
-              <img
-                width="30"
-                height="30"
-                src="https://img.icons8.com/material-outlined/24/rectangle-stroked.png"
-                alt="rectangle-stroked"
-              />
-            </div>
+            {/* LINE */}
+            <ToolButton
+              tool="line"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/ios/50/ruler.png"
+            ></ToolButton>
 
-            {/* circle */}
-            <div className="tool-btn hover-tool" id="Circle">
-              <img
-                width="30"
-                height="30"
-                onClick={() => setTool("circle")}
-                src="https://img.icons8.com/sf-regular/30/circled.png"
-                alt="circled"
-              />
-            </div>
+            {/* RECTANGLE */}
+            <ToolButton
+              tool="rect"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/material-outlined/24/rectangle-stroked.png"
+            ></ToolButton>
 
-            {/* triangle */}
-            <div className="tool-btn hover-tool" id="Triangle">
-              <img
-                width="30"
-                height="30"
-                onClick={() => setTool("triangle")}
-                src="https://img.icons8.com/material-outlined/24/triangle-stroked.png"
-                alt="eclipse"
-              />
-            </div>
+            {/* CIRCLE */}
+            <ToolButton
+              tool="circle"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/sf-regular/30/circled.png"
+            ></ToolButton>
 
-            {/* eclipse */}
-            <div className="tool-btn hover-tool" id="Eclipse">
-              <img
-                width="40"
-                height="20"
-                onClick={() => setTool("eclipse")}
-                src="https://img.icons8.com/sf-regular/30/circled.png"
-                alt="eclipse"
-              />
-            </div>
+            {/* TRIANGLE */}
+            <ToolButton
+              tool="triangle"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/material-outlined/24/triangle-stroked.png"
+            ></ToolButton>
 
+            {/* ECLIPSE */}
+            <ToolButton
+              tool="eclipse"
+              btnType="tool-btn"
+              onClick={setTool}
+              width="40"
+              height="20"
+              icon="https://img.icons8.com/sf-regular/30/circled.png"
+            ></ToolButton>
 
-            {/* curve */}
-            <div className="tool-btn hover-tool" id="Star">
-              <img
-                width="30"
-                height="30"
-                onClick={() => setTool("star")}
-                src="https://img.icons8.com/material-outlined/24/star--v2.png"
-                alt="star"
-              />
-            </div>
+            {/* STAR */}
+            <ToolButton
+              tool="star"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/material-outlined/24/star--v2.png"
+            ></ToolButton>
 
-            {/* polygon */}
-            <div className="tool-btn hover-tool" id="Polygon">
-              <img
-                width="30"
-                height="30"
-                onClick={() => setTool("polygon")}
-                src="https://img.icons8.com/ios-filled/50/polygon.png"
-                alt="polygon"
-              />
-            </div>
+            {/* POLYGON */}
+            <ToolButton
+              tool="polygon"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/ios-filled/50/polygon.png"
+            ></ToolButton>
           </div>
 
           {/* brush size slider */}
@@ -575,13 +504,13 @@ const RoomPage = ({ user, socket, users }) => {
           </div>
         </div>
 
-        {/* user chat */}
+        {/* USERS STATION */}
         <div
           className={`user-chat ${
             chatVisible ? "chat-visible" : "chat-hidden"
           }`}
         >
-          {/* chat btn */}
+          {/* CHAT BUTTON */}
           <div
             className="open-chat-cont"
             onClick={() => setOpenChat(!openChat)}
@@ -597,7 +526,7 @@ const RoomPage = ({ user, socket, users }) => {
             </button>
           </div>
 
-          {/* chat names */}
+          {/* NAMES */}
           <div className={` ${openChat ? "name-visible" : "name-hidden"}`}>
             {users
               .filter((usr) => usr.roomId === roomId)
@@ -609,7 +538,7 @@ const RoomPage = ({ user, socket, users }) => {
               ))}
           </div>
 
-          {/* chat tools */}
+          {/* CHAT TOOLS */}
           <div
             className={`chat-tools ${
               openChat ? "name-hidden" : "name-visible"
@@ -644,7 +573,8 @@ const RoomPage = ({ user, socket, users }) => {
             </div>
           </div>
         </div>
-        {/* whiteboard */}
+
+        {/* WHITEBOARD */}
         <div className="canvas-container">
           <Whiteboard
             canvasRef={canvasRef}
