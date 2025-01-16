@@ -95,9 +95,9 @@ Easily choose from a spectrum of colors to enhance your creative projects.
 
 Available tools for all your creative needs:
    - **𓂃🖌 Pencil** - Freehand drawing tool.
-   - **― Line** - Draw straight lines with precision.
    - **🖍 High lighter** - Semi-transparent highlight effect.
    - **🖊 Marker** - Bold, marker-like strokes.
+   - **― Line** - Draw straight lines with precision.
    - **▭ Quadrilateral** - Shape with four sides. 
    - **△ Triangle** - Shape with three sides.
    - **○ Circle** - Perfect circle shape.

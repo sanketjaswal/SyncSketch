@@ -48,7 +48,12 @@ export const setElementBasics = (tool, element, offsetX, offsetY) => {
       element.points = [[offsetX, offsetY]];
       break;
     }
-    case "spray": 
+    // case "brush":
+    //   element.type = "brush";
+    //   element.path = [[offsetX, offsetY]];
+    //   element.opacity = 0.5;
+    //   break;
+    case "spray":
       element.type = "spray";
       element.dots = [];
       break;
@@ -66,12 +71,6 @@ export const setElementBasics = (tool, element, offsetX, offsetY) => {
   }
   return element;
 };
-
-// const sprayOptions = {
-//   radius: 10,      // Spray radius
-//   density: 5,     // Number of dots per spray
-//   dotSize: ,      // Size of each dot
-// };
 
 // Set ELEMENT PATH for TOOL :-// MOUSE MOVE
 export const setElementPath = (tool, currentElement, offsetX, offsetY) => {
@@ -102,23 +101,27 @@ export const setElementPath = (tool, currentElement, offsetX, offsetY) => {
       currentElement.points.push([offsetX, offsetY]);
       break;
 
-      case "spray": {
-        const { radius, density, dotSize } =  {
-          radius: 10,      // Spray radius
-          density:Math.max(5, currentElement.roughness * 10),     // Number of dots per spray
-          dotSize: currentElement.roughness,      // Size of each dot
-        };
-  
-        for (let i = 0; i < density; i++) {
-          const angle = Math.random() * Math.PI; // Random angle
-          const distance = Math.random() * radius;  // Random distance from center
-          const dotX = offsetX + distance * Math.cos(angle);
-          const dotY = offsetY + distance * Math.sin(angle);
-  
-          currentElement.dots.push({ x: dotX, y: dotY, size: dotSize });
-        }
-        break;
-      }  
+    case "spray": {
+      const { radius, density, dotSize } = {
+        radius: 10, // Spray radius
+        density: Math.max(5, currentElement.roughness * 10), // Number of dots per spray
+        dotSize: currentElement.roughness, // Size of each dot
+      };
+
+      for (let i = 0; i < density; i++) {
+        const angle = Math.random() * Math.PI; // Random angle
+        const distance = Math.random() * radius; // Random distance from center
+        const dotX = offsetX + distance * Math.cos(angle);
+        const dotY = offsetY + distance * Math.sin(angle);
+
+        currentElement.dots.push({ x: dotX, y: dotY, size: dotSize });
+      }
+      break;
+    }
+
+    // case "brush":
+    //   currentElement.path.push([offsetX, offsetY]);
+    //   break;
 
     case "star": {
       const centerX = currentElement.offsetX;

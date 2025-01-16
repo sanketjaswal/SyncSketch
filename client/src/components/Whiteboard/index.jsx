@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import "./index.css";
 import { drawElements } from "../../utils/draw";
-import { elementOffsetCheck } from "../../utils/resize";
+import { drawResizeHandles, elementOffsetCheck } from "../../utils/resize";
 import { setElementBasics, setElementPath } from "../../utils/tools";
 import { moveOrResizeElement, selectElement } from "../../utils/selectTools";
 
@@ -62,7 +62,7 @@ const Whiteboard = ({
   // DRAW ELEMENTS
   useEffect(() => {
     drawElements(canvasRef, ctxRef, rough, elements, selectedElement);
-  }, [elements, selectedElement]);
+  }, [canvasRef, ctxRef, elements, selectedElement]);
 
   // MOUSE DOWN EVENT
   const handleMouseDown = (e) => {
@@ -79,6 +79,9 @@ const Whiteboard = ({
         setElements,
         setResizeHandle
       );
+      // if (selectedElement) {
+      //   drawResizeHandles(selectedElement);
+      // }
     } else {
       // SET NEW ELEMENT FOUNDATION
       const element = {
@@ -92,6 +95,7 @@ const Whiteboard = ({
         width: 0,
         height: 0,
         startAngle: 0,
+        opacity: 1,
         endAngle: 0,
         points: [],
         path: [],
@@ -124,8 +128,12 @@ const Whiteboard = ({
           currentElement,
           offsetX,
           offsetY,
-          selectedElement
+          selectedElement, ctxRef
         );
+
+        // if (selectedElement) {
+        //   drawResizeHandles(ctxRef, selectedElement);
+        // }
       } else {
         // SET ELEMENT PATH
         if (currentElement) {

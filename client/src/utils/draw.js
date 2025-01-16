@@ -16,6 +16,10 @@ export const drawElements = (
 
   // console.log(elements)
 
+  if (selectedElement) {
+        drawResizeHandles(ctxRef, selectedElement);
+      }
+
   elements.forEach((element) => {
     if (element.style == null) {
       element.fill = "transparent";
@@ -129,24 +133,7 @@ export const drawElements = (
         }
       );
     }
-    // arc
-    // else if (element.type === "arc") {
-    //   roughCanvas.arc(
-    //     element.offsetX,
-    //     element.offsetY,
-    //     element.width,
-    //     element.height,
-    //     element.startAngle,
-    //     element.endAngle,
-    //     {
-    //       stroke: element.stroke,
-    //       strokeWidth: element.strokeWidth,
-    //       roughness: element.roughness,
-    //       fill: element.fill,
-    //       fillStyle: element.style,
-    //     }
-    //   );
-    // }
+    
     // polygon
     else if (element.type === "polygon") {
       roughCanvas.polygon(element.points, {
@@ -167,6 +154,22 @@ export const drawElements = (
         });
       });
     }
+    // brush
+    // else if (element.type === "brush") {
+    //   // Draw each segment of the path
+    //   ctx.globalAlpha = element.opacity || 1;
+    //   element.path.forEach((point, index) => {
+    //     if (index === 0) return;
+    //     const [x1, y1] = element.path[index - 1];
+    //     const [x2, y2] = point;
+
+    //     roughCanvas.line(x1, y1, x2, y2, {
+    //       stroke: element.stroke,
+    //       strokeWidth: element.strokeWidth,
+    //       roughness: element.roughness,
+    //     });
+    //   });
+    // }
     // triangle
     else if (element.type === "triangle") {
       roughCanvas.polygon(element.points, {
@@ -185,7 +188,5 @@ export const drawElements = (
     }
   });
 
-  if (selectedElement) {
-    drawResizeHandles(selectedElement);
-  }
+  
 };

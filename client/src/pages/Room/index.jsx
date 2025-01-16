@@ -135,13 +135,16 @@ const RoomPage = ({ user, socket, users }) => {
       canvs.style.cursor = "crosshair";
     } else if (tool == "text") {
       canvs.style.cursor = "text";
-
     } 
+    else if (tool == "brush") {
+      canvs.style.cursor = "url(https://img.icons8.com/ios-filled/30/cosmetic-brush.png)0 50 , auto";
+    }
     else if (tool == "spray") {
       canvs.style.cursor = "url(https://img.icons8.com/ios-glyphs/30/deodorant-spray.png)20 0 , auto";
     }else if (tool == "select") {
       canvs.style.cursor =
-        "url(https://img.icons8.com/sf-regular/28/resize-four-directions.png)0 50 , auto";
+      "pointer"
+        // "url(https://img.icons8.com/sf-regular/28/resize-four-directions.png)0 50 , auto";
     }
   };
 
@@ -428,6 +431,14 @@ const RoomPage = ({ user, socket, users }) => {
               onClick={setTool}
               icon="https://img.icons8.com/ios-glyphs/30/deodorant-spray.png"
             ></ToolButton>
+
+           {/* Brush */}
+           {/* <ToolButton
+              tool="brush"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/ios-filled/30/cosmetic-brush.png"
+            ></ToolButton> */}
           </div>
 
           {/* BRUSH SIZE SLIDER */}

@@ -1,8 +1,14 @@
+import { isPointInTriangle } from "./selectTools";
+
 // GET ELEMENT AT MOUSE POSITION
 export const getElementAtPosition = (x, y, elements, ctxRef) => {
   for (let i = elements.length - 1; i >= 0; i--) {
     const element = elements[i];
-    if (element.type === "rect") {
+    if (element.type === "triangle") {
+      if (isPointInTriangle(x, y, element.points)) {
+        return i;
+      }
+    } else if (element.type === "rect") {
       if (
         x >= element.offsetX &&
         x <= element.offsetX + element.width &&
@@ -27,10 +33,6 @@ export const getElementAtPosition = (x, y, elements, ctxRef) => {
       ) {
         return i;
       }
-      // } else if (element.type === "triangle") {
-      //   if (isPointInTriangle(x, y, element.points)) {
-      //     return i;
-      //   }
     } else if (element.type === "text") {
       const textWidth = ctxRef.current.measureText(element.content).width;
       if (
@@ -48,20 +50,46 @@ export const getElementAtPosition = (x, y, elements, ctxRef) => {
 
 // DRAW RESIZE HANDLES
 export const drawResizeHandles = (ctxRef, element) => {
+  // console.log("drawResizeHandles", element);
   if (!element) return;
 
   const ctx = ctxRef.current;
   const { offsetX, offsetY, width, height } = element;
-  const handleSize = 20; // Size of the resize handles
+  const handleSize = 10; // Size of the resize handles
 
-  const handles = [
-    { x: offsetX, y: offsetY }, // Top-left
-    { x: offsetX + width, y: offsetY }, // Top-right
-    { x: offsetX, y: offsetY + height }, // Bottom-left
-    { x: offsetX + width, y: offsetY + height }, // Bottom-right
-  ];
+  let handles = [];
 
-  ctx.fillStyle = "red";
+  // RECTANGLE
+  if (element.type == "rect") {
+    handles = [
+      { x: offsetX, y: offsetY }, // Top-left
+      { x: offsetX + width, y: offsetY }, // Top-right
+      { x: offsetX, y: offsetY + height }, // Bottom-left
+      { x: offsetX + width, y: offsetY + height }, // Bottom-right
+    ];
+    ctx.fillStyle = "red";
+  }
+  // TRIANGLE
+  else if (element.type == "triangle") {
+    const vertices = element.points;
+    handles = vertices.map(([x, y], index) => ({ x, y, index }));
+    ctx.fillStyle = "blue";
+  }
+  //LINE
+  else if (element.type == "line") {
+    handles = [
+      { x: offsetX, y: offsetY }, // Start point
+      { x: width, y: height }, // End point
+    ];
+    ctx.fillStyle = "green";
+  }
+  //CIRCLE
+  else if (element.type == "circle") {
+    handles = [
+      { x: offsetX, y: offsetY }, // Center point
+    ];
+    ctx.fillStyle = "yellow";
+  }
 
   handles.forEach(({ x, y }) => {
     ctx.fillRect(
@@ -79,16 +107,16 @@ export const getResizeHandleAtPosition = (x, y, element) => {
   const handleSize = 50;
 
   if (element.type === "triangle") {
-    const handleSize = 10; // Resize handle size
+    const handleSize = 100; // Resize handle size
     const vertices = element.points;
 
     for (let i = 0; i < vertices.length; i++) {
       const [vx, vy] = vertices[i];
       if (
-        x >= vx - handleSize / 2 &&
-        x <= vx + handleSize / 2 &&
-        y >= vy - handleSize / 2 &&
-        y <= vy + handleSize / 2
+        x >= vx - handleSize &&
+        x <= vx + handleSize &&
+        y >= vy - handleSize &&
+        y <= vy + handleSize
       ) {
         return `vertex-${i}`;
       }
@@ -118,36 +146,82 @@ export const getResizeHandleAtPosition = (x, y, element) => {
 };
 
 // RESIZE ELEMENT and CURSOR CHANGE
+// export const resizeElement = (
+//   currentElement,
+//   resizeHandle,
+//   offsetX,
+//   offsetY
+// ) => {
+//   if (currentElement.type === "triangle") {
+//     const vertexIndex = parseInt(resizeHandle.split("-")[1], 10);
+//     currentElement.points[vertexIndex] = [offsetX, offsetY];
+//   } else if (currentElement.type === "line") {
+//     if (resizeHandle === "top-left") {
+//       currentElement.offsetX = offsetX;
+//       currentElement.offsetY = offsetY;
+//     } else if (resizeHandle === "bottom-right") {
+//       currentElement.width = offsetX;
+//       currentElement.height = offsetY;
+//     }
+//   } else if (currentElement.type === "rect") {
+//     if (resizeHandle == "top-left") {
+//       document.getElementsByClassName("drawing-canvas")[0].style.cursor =
+//         "url('https://img.icons8.com/windows/20/resize-diagonal--v2.png'), auto";
+//       currentElement.width += currentElement.offsetX - offsetX;
+//       currentElement.offsetX = offsetX;
+//       currentElement.height += currentElement.offsetY - offsetY;
+//       currentElement.offsetY = offsetY;
+//     } else if (resizeHandle == "top-right") {
+//       document.getElementsByClassName("drawing-canvas")[0].style.cursor =
+//         "url('https://img.icons8.com/ios-filled/20/000000/resize-diagonal.png'), auto";
+//       currentElement.width = offsetX - currentElement.offsetX;
+//       currentElement.height += currentElement.offsetY - offsetY;
+//       currentElement.offsetY = offsetY;
+//     } else if (resizeHandle == "bottom-left") {
+//       document.getElementsByClassName("drawing-canvas")[0].style.cursor =
+//         "url('https://img.icons8.com/ios-filled/20/000000/resize-diagonal.png'), auto";
+//       currentElement.width += currentElement.offsetX - offsetX;
+//       currentElement.offsetX = offsetX;
+//       currentElement.height = offsetY - currentElement.offsetY;
+//     } else if (resizeHandle == "bottom-right") {
+//       document.getElementsByClassName("drawing-canvas")[0].style.cursor =
+//         "url('https://img.icons8.com/windows/20/resize-diagonal--v2.png'), auto";
+//       currentElement.width = offsetX - currentElement.offsetX;
+//       currentElement.height = offsetY - currentElement.offsetY;
+//     }
+//   }
+// };
+
 export const resizeElement = (
   currentElement,
   resizeHandle,
   offsetX,
-  offsetY
+  offsetY, ctxRef
 ) => {
-  if (resizeHandle == "top-left") {
-    document.getElementsByClassName("drawing-canvas")[0].style.cursor =
-      "url('https://img.icons8.com/windows/20/resize-diagonal--v2.png'), auto";
-    currentElement.width += currentElement.offsetX - offsetX;
-    currentElement.offsetX = offsetX;
-    currentElement.height += currentElement.offsetY - offsetY;
-    currentElement.offsetY = offsetY;
-  } else if (resizeHandle == "top-right") {
-    document.getElementsByClassName("drawing-canvas")[0].style.cursor =
-      "url('https://img.icons8.com/ios-filled/20/000000/resize-diagonal.png'), auto";
-    currentElement.width = offsetX - currentElement.offsetX;
-    currentElement.height += currentElement.offsetY - offsetY;
-    currentElement.offsetY = offsetY;
-  } else if (resizeHandle == "bottom-left") {
-    document.getElementsByClassName("drawing-canvas")[0].style.cursor =
-      "url('https://img.icons8.com/ios-filled/20/000000/resize-diagonal.png'), auto";
-    currentElement.width += currentElement.offsetX - offsetX;
-    currentElement.offsetX = offsetX;
-    currentElement.height = offsetY - currentElement.offsetY;
-  } else if (resizeHandle == "bottom-right") {
-    document.getElementsByClassName("drawing-canvas")[0].style.cursor =
-      "url('https://img.icons8.com/windows/20/resize-diagonal--v2.png'), auto";
-    currentElement.width = offsetX - currentElement.offsetX;
-    currentElement.height = offsetY - currentElement.offsetY;
+  if (currentElement.type === "triangle") {
+    const vertexIndex = parseInt(resizeHandle.split("-")[1]);
+    currentElement.points[vertexIndex] = [offsetX, offsetY];
+  } else {
+    // Resize logic for other shapes
+    // Example: Resizing a rectangle
+    if (resizeHandle === "top-left") {
+      currentElement.width += currentElement.offsetX - offsetX;
+      currentElement.offsetX = offsetX;
+      currentElement.height += currentElement.offsetY - offsetY;
+      currentElement.offsetY = offsetY;
+    } else if (resizeHandle === "top-right") {
+      currentElement.width = offsetX - currentElement.offsetX;
+      currentElement.height += currentElement.offsetY - offsetY;
+      currentElement.offsetY = offsetY;
+    } else if (resizeHandle === "bottom-left") {
+      currentElement.width += currentElement.offsetX - offsetX;
+      currentElement.offsetX = offsetX;
+      currentElement.height = offsetY - currentElement.offsetY;
+    } else if (resizeHandle === "bottom-right") {
+      currentElement.width = offsetX - currentElement.offsetX;
+      currentElement.height = offsetY - currentElement.offsetY;
+    }
+    drawResizeHandles(ctxRef, currentElement);
   }
 };
 
