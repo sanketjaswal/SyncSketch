@@ -88,6 +88,20 @@ export const drawElements = (
           fillStyle: element.style,
         });
       }
+    // heart
+    else if (element.type === "heart") {
+      if (element.path && element.path.length > 0) {
+        roughCanvas.polygon(element.path, {
+          stroke: element.stroke,
+          strokeWidth: element.strokeWidth,
+          roughness: element.roughness,
+          fill: element.fill,
+          fillStyle: element.style,
+        });
+      } else {
+        // console.error("Heart path is undefined or empty:", element.path);
+      }
+    }
     // line
     else if (element.type === "line") {
       roughCanvas.line(

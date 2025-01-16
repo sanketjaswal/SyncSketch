@@ -269,7 +269,7 @@ const RoomPage = ({ user, socket, users }) => {
                   id="dropdown-value-image"
                   width="40"
                   height="40"
-                  src="https://img.icons8.com/windows/40/hand-holding.png"
+                  src="https://img.icons8.com/windows/50/hand-holding.png"
                   alt="empty_1"
                 />
               </button>
@@ -355,7 +355,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="highlighter"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/color/48/marker-pen.png"
+              icon="https://img.icons8.com/color/50/marker-pen.png"
             ></ToolButton>
 
             {/* PENCIL */}
@@ -363,7 +363,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="pencil"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/external-itim2101-fill-itim2101/64/1A1A1A/external-pen-school-stationery-itim2101-fill-itim2101.png"
+              icon="https://img.icons8.com/external-itim2101-fill-itim2101/50/1A1A1A/external-pen-school-stationery-itim2101-fill-itim2101.png"
             ></ToolButton>
 
             {/* LINE */}
@@ -379,7 +379,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="rect"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/material-outlined/24/rectangle-stroked.png"
+              icon="https://img.icons8.com/material-outlined/50/rectangle-stroked.png"
             ></ToolButton>
 
             {/* CIRCLE */}
@@ -387,7 +387,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="circle"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/sf-regular/30/circled.png"
+              icon="https://img.icons8.com/sf-regular/50/circled.png"
             ></ToolButton>
 
             {/* TRIANGLE */}
@@ -395,7 +395,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="triangle"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/material-outlined/24/triangle-stroked.png"
+              icon="https://img.icons8.com/material-outlined/50/triangle-stroked.png"
             ></ToolButton>
 
             {/* ECLIPSE */}
@@ -405,7 +405,7 @@ const RoomPage = ({ user, socket, users }) => {
               onClick={setTool}
               width="40"
               height="20"
-              icon="https://img.icons8.com/sf-regular/30/circled.png"
+              icon="https://img.icons8.com/sf-regular/50/circled.png"
             ></ToolButton>
 
             {/* STAR */}
@@ -413,7 +413,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="star"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/material-outlined/24/star--v2.png"
+              icon="https://img.icons8.com/material-outlined/50/star--v2.png"
             ></ToolButton>
 
             {/* POLYGON */}
@@ -429,7 +429,15 @@ const RoomPage = ({ user, socket, users }) => {
               tool="spray"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/ios-glyphs/30/deodorant-spray.png"
+              icon="https://img.icons8.com/ios-glyphs/50/deodorant-spray.png"
+            ></ToolButton>
+
+            {/* Heart */}
+            <ToolButton
+              tool="heart"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/material-outlined/50/like--v1.png"
             ></ToolButton>
 
            {/* Brush */}
@@ -437,7 +445,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="brush"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/ios-filled/30/cosmetic-brush.png"
+              icon="https://img.icons8.com/ios-filled/50/cosmetic-brush.png"
             ></ToolButton> */}
           </div>
 

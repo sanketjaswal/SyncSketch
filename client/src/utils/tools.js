@@ -50,24 +50,28 @@ export const setElementBasics = (tool, element, offsetX, offsetY) => {
       element.points = [[offsetX, offsetY]];
       break;
     }
-    // case "brush":
-    //   element.type = "brush";
-    //   element.path = [[offsetX, offsetY]];
-    //   element.opacity = 0.5;
-    //   break;
-    case "spray":
-      element.type = "spray";
-      element.dots = [];
+    case "heart":
+      element.type = "heart";
+      element.points = [[offsetX, offsetY]]; // Starting point
       break;
-    case "text": {
-      const content = prompt("Enter your text:");
-      if (content) {
-        element.type = "text";
-        element.content = content;
-        element.fontSize = 16;
-      }
-      break;
-    }
+      case "spray":
+        element.type = "spray";
+        element.dots = [];
+        break;
+        case "text": {
+          const content = prompt("Enter your text:");
+          if (content) {
+            element.type = "text";
+            element.content = content;
+            element.fontSize = 16;
+          }
+          break;
+        }
+        // case "brush":
+        //   element.type = "brush";
+        //   element.path = [[offsetX, offsetY]];
+        //   element.opacity = 0.5;
+        //   break;
     default:
       break;
   }
@@ -124,6 +128,32 @@ export const setElementPath = (tool, currentElement, offsetX, offsetY) => {
     // case "brush":
     //   currentElement.path.push([offsetX, offsetY]);
     //   break;
+
+    case "heart": {
+      const centerX = currentElement.points[0][0];
+      const centerY = currentElement.points[0][1];
+      const width = Math.abs(offsetX - centerX); // Determine width based on drag
+      const height = Math.abs(offsetY - centerY); // Determine height based on drag
+    
+      // Generate points for the heart
+      const path = [];
+      for (let t = 0; t <= Math.PI * 2; t += 0.1) {
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y =
+          13 * Math.cos(t) -
+          5 * Math.cos(2 * t) -
+          2 * Math.cos(3 * t) -
+          Math.cos(4 * t);
+    
+        // Scale and translate the points
+        const scaledX = centerX + (x * width) / 32; // Scale width and center
+        const scaledY = centerY - (y * height) / 32; // Scale height and center
+        path.push([scaledX, scaledY]);
+      }
+    
+      currentElement.path = path;
+      break;
+    }
 
     case "star": {
       const centerX = currentElement.offsetX;
