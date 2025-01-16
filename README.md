@@ -104,6 +104,7 @@ Available tools for all your creative needs:
    - **⬭ Eclipse** - Shape of uneven circle.
    - **⬡ Polygon** - Shape with multiple sides.
    - **☆ Star** - A Star shape.
+   - **♥ Heart ♡** - A Heart shape.
    - **☑ Select** - Select and manipulate drawn elements.
    - **🅰 Text** -  Add text to the canvas.
    - **💨 Spray** - Dotted pattern Spray effect.
