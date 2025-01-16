@@ -157,6 +157,16 @@ export const drawElements = (
         fillStyle: element.style,
       });
     }
+    // spray
+    else if (element.type === "spray") {
+      element.dots.forEach((dot) => {
+        roughCanvas.circle(dot.x, dot.y, dot.size, {
+          fill: element.stroke,
+          stroke: element.stroke,
+          roughness: element.roughness,
+        });
+      });
+    }
     // triangle
     else if (element.type === "triangle") {
       roughCanvas.polygon(element.points, {

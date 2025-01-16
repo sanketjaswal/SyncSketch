@@ -95,6 +95,7 @@ const Whiteboard = ({
         endAngle: 0,
         points: [],
         path: [],
+        dots: [],
         uuid: uuidv4(),
       };
 

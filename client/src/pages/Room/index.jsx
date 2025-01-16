@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import "./index.css";
 import { toolHover } from "../../utils/hover";
@@ -17,6 +17,7 @@ import dashed from "../../assets/dashed.png";
 import sunburst from "../../assets/sunburst.png";
 import solid from "../../assets/solid.png";
 import { ToolButton } from "../../components/ToolBtn";
+import { Slider } from "../../components/Slider";
 
 const RoomPage = ({ user, socket, users }) => {
   const canvasRef = useRef(null);
@@ -134,8 +135,13 @@ const RoomPage = ({ user, socket, users }) => {
       canvs.style.cursor = "crosshair";
     } else if (tool == "text") {
       canvs.style.cursor = "text";
-    } else if (tool == "select") {
-      canvs.style.cursor = "url(https://img.icons8.com/sf-regular/28/resize-four-directions.png)0 50 , auto";
+
+    } 
+    else if (tool == "spray") {
+      canvs.style.cursor = "url(https://img.icons8.com/ios-glyphs/30/deodorant-spray.png)20 0 , auto";
+    }else if (tool == "select") {
+      canvs.style.cursor =
+        "url(https://img.icons8.com/sf-regular/28/resize-four-directions.png)0 50 , auto";
     }
   };
 
@@ -273,7 +279,7 @@ const RoomPage = ({ user, socket, users }) => {
                   onClick={setFillStyle}
                   icon={hachure}
                 ></ToolButton>
-                
+
                 {/* ZIGZAG LINE */}
                 <ToolButton
                   tool="zigzag-line"
@@ -281,7 +287,7 @@ const RoomPage = ({ user, socket, users }) => {
                   onClick={setFillStyle}
                   icon={zigzagLine}
                 ></ToolButton>
-                
+
                 {/* DOTS */}
                 <ToolButton
                   tool="dots"
@@ -289,7 +295,7 @@ const RoomPage = ({ user, socket, users }) => {
                   onClick={setFillStyle}
                   icon={dots}
                 ></ToolButton>
-                
+
                 {/* CROSS HATCH */}
                 <ToolButton
                   tool="cross-hatch"
@@ -297,7 +303,7 @@ const RoomPage = ({ user, socket, users }) => {
                   onClick={setFillStyle}
                   icon={crossHatch}
                 ></ToolButton>
-                
+
                 {/* DASHED */}
                 <ToolButton
                   tool="dashed"
@@ -305,7 +311,7 @@ const RoomPage = ({ user, socket, users }) => {
                   onClick={setFillStyle}
                   icon={dashed}
                 ></ToolButton>
-                
+
                 {/* SUNBURST */}
                 <ToolButton
                   tool="sunburst"
@@ -313,7 +319,7 @@ const RoomPage = ({ user, socket, users }) => {
                   onClick={setFillStyle}
                   icon={sunburst}
                 ></ToolButton>
-               
+
                 {/* SOLID */}
                 <ToolButton
                   tool="solid"
@@ -321,7 +327,7 @@ const RoomPage = ({ user, socket, users }) => {
                   onClick={setFillStyle}
                   icon={solid}
                 ></ToolButton>
-                
+
                 {/* REMOVE */}
                 <ToolButton
                   tool={null}
@@ -414,36 +420,37 @@ const RoomPage = ({ user, socket, users }) => {
               onClick={setTool}
               icon="https://img.icons8.com/ios-filled/50/polygon.png"
             ></ToolButton>
+
+            {/* SPRAY */}
+            <ToolButton
+              tool="spray"
+              btnType="tool-btn"
+              onClick={setTool}
+              icon="https://img.icons8.com/ios-glyphs/30/deodorant-spray.png"
+            ></ToolButton>
           </div>
 
-          {/* brush size slider */}
-          <div className="control-item brush-div hover-tool" id="Brush-Size">
-            <input
-              type="range"
-              min="1"
-              max="100"
-              defaultValue="1"
-              className="slider"
-              id="myRange"
-              onChange={(e) => setBrushSize(e.target.value)}
-            ></input>
-          </div>
+          {/* BRUSH SIZE SLIDER */}
+          <Slider
+            min="1"
+            max="100"
+            defVal="1"
+            onClick={setBrushSize}
+            id="Brush-Size"
+          />
 
-          {/* Roughness slider */}
-          <div className="control-item brush-div hover-tool" id="Roughness">
-            <input
-              type="range"
-              min="0"
-              max="2"
-              defaultValue="0"
-              className="slider"
-              id="myRange"
-              onChange={(e) => setRoughness(e.target.value)}
-            ></input>
-          </div>
+          {/* ROUGHNESS SLIDER*/}
+          <Slider
+            min="0"
+            max="2"
+            defVal="0"
+            onClick={setRoughness}
+            id="Roughness"
+          />
 
-          {/* undo */}
+          {/* CANVAS CONTROL */}
           <div className="control-item">
+            {/* undo */}
             <button
               className="button hover-tool"
               id="Undo"

@@ -105,7 +105,8 @@ Available tools for all your creative needs:
    - **⬡ Polygon** - Shape with multiple sides.
    - **☆ Star** - A Star shape.
    - **☑ Select** - Select and manipulate drawn elements.
-   - **🅰Text** -  Add text to the canvas.
+   - **🅰 Text** -  Add text to the canvas.
+   - **💨 Spray** - Dotted pattern Spray effect.
    - **🗑 Eraser** - Erase unwanted drawings.
    - **♒︎ Fill pattern** - Apply patterns to shapes fill.
    
