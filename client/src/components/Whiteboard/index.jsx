@@ -79,9 +79,6 @@ const Whiteboard = ({
         setElements,
         setResizeHandle
       );
-      // if (selectedElement) {
-      //   drawResizeHandles(selectedElement);
-      // }
     } else {
       // SET NEW ELEMENT FOUNDATION
       const element = {

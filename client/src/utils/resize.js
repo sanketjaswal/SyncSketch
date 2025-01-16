@@ -33,7 +33,17 @@ export const getElementAtPosition = (x, y, elements, ctxRef) => {
       ) {
         return i;
       }
-    } else if (element.type === "text") {
+    } 
+    else if (element.type === "eclipse") {
+      const { offsetX, offsetY, radiusX, radiusY } = element;
+      // Check if the point is inside the ellipse
+      const dx = (x - offsetX) / radiusX;
+      const dy = (y - offsetY) / radiusY;
+      if (dx * dx + dy * dy <= 1) {
+        return i;
+      }
+    }
+    else if (element.type === "text") {
       const textWidth = ctxRef.current.measureText(element.content).width;
       if (
         x >= element.offsetX &&
@@ -54,7 +64,7 @@ export const drawResizeHandles = (ctxRef, element) => {
   if (!element) return;
 
   const ctx = ctxRef.current;
-  const { offsetX, offsetY, width, height } = element;
+  const { offsetX, offsetY, width, height, radiusX, radiusY } = element;
   const handleSize = 10; // Size of the resize handles
 
   let handles = [];
@@ -82,6 +92,15 @@ export const drawResizeHandles = (ctxRef, element) => {
       { x: width, y: height }, // End point
     ];
     ctx.fillStyle = "green";
+  }
+  else if (element.type == "eclipse") {
+    handles = [
+      { x: offsetX - radiusX, y: offsetY - radiusY }, // Top-left
+      { x: offsetX + radiusX, y: offsetY - radiusY }, // Top-right
+      { x: offsetX - radiusX, y: offsetY + radiusY }, // Bottom-left
+      { x: offsetX + radiusX, y: offsetY + radiusY }, // Bottom-right
+    ];
+    ctx.fillStyle = "blue";
   }
   //CIRCLE
   else if (element.type == "circle") {
@@ -201,7 +220,25 @@ export const resizeElement = (
   if (currentElement.type === "triangle") {
     const vertexIndex = parseInt(resizeHandle.split("-")[1]);
     currentElement.points[vertexIndex] = [offsetX, offsetY];
-  } else {
+  } 
+  else if (currentElement.type === "eclipse") {
+    const { offsetX: cx, offsetY: cy } = currentElement;
+
+    if (resizeHandle === "top-left") {
+      currentElement.radiusX = Math.abs(cx - offsetX);
+      currentElement.radiusY = Math.abs(cy - offsetY);
+    } else if (resizeHandle === "top-right") {
+      currentElement.radiusX = Math.abs(offsetX - cx);
+      currentElement.radiusY = Math.abs(cy - offsetY);
+    } else if (resizeHandle === "bottom-left") {
+      currentElement.radiusX = Math.abs(cx - offsetX);
+      currentElement.radiusY = Math.abs(offsetY - cy);
+    } else if (resizeHandle === "bottom-right") {
+      currentElement.radiusX = Math.abs(offsetX - cx);
+      currentElement.radiusY = Math.abs(offsetY - cy);
+    }
+  }
+  else {
     // Resize logic for other shapes
     // Example: Resizing a rectangle
     if (resizeHandle === "top-left") {

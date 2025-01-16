@@ -31,6 +31,8 @@ export const setElementBasics = (tool, element, offsetX, offsetY) => {
       break;
     case "eclipse":
       element.type = "eclipse";
+      element.radiusX= 0;
+      element.radiusY= 0;
       break;
     case "polygon":
       element.type = "polygon";

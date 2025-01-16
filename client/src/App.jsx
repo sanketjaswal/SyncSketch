@@ -8,7 +8,7 @@ import "./App.css";
 import RoomPage from "./pages/Room";
 import Forms from "./components/Forms";
 
-const server = "https://syncsketch-backend.onrender.com"
+const server = "https://syncsketch/-backend.onrender.com"
 // const server = "http://localhost:5000";
 
 

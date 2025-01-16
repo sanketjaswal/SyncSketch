@@ -39,10 +39,21 @@ export const selectElement = (
 
 
 // RESIZE / MOVE ELEMENT :-  MOUSE MOVE
-export const moveOrResizeElement = (resizeHandle, currentElement, offsetX, offsetY, selectedElement, ctxRef) => {
+export const moveOrResizeElement = (resizeHandle, currentElement, offsetX, offsetY, selectedElement) => {
   if (resizeHandle) {
-    resizeElement(currentElement, resizeHandle, offsetX, offsetY, ctxRef);
+    resizeElement(currentElement, resizeHandle, offsetX, offsetY);
+  } else if (currentElement.type === "triangle") {
+    // Move all vertices of the triangle
+    const { diffX, diffY } = selectedElement;
+    const deltaX = offsetX - currentElement.offsetX - diffX;
+    const deltaY = offsetY - currentElement.offsetY - diffY;
+
+    currentElement.points = currentElement.points.map(([x, y]) => [x + deltaX, y + deltaY]);
+
+    currentElement.offsetX = offsetX - diffX; // Update the reference position
+    currentElement.offsetY = offsetY - diffY; // Update the reference position
   } else {
+    // Move logic for other shapes
     const { diffX, diffY } = selectedElement;
     currentElement.offsetX = offsetX - diffX;
     currentElement.offsetY = offsetY - diffY;
