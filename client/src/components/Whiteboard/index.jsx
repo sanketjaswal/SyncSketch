@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import "./index.css";
 import { drawElements } from "../../utils/draw";
-import { drawResizeHandles, elementOffsetCheck } from "../../utils/resize";
+import { elementOffsetCheck } from "../../utils/resize";
 import { setElementBasics, setElementPath } from "../../utils/tools";
 import { moveOrResizeElement, selectElement } from "../../utils/selectTools";
 
