@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import PropTypes from "prop-types";
-import CreateRoomForm from "./CreateRoomForm";
+
 import "./index.css";
 import JoinRoomForm from "./JoinRoomForm";
+import CreateRoomForm from "./CreateRoomForm";
 import brush from "../../assets/paintbrush.png";
 
 const Forms = ({ uuid, socket, setUser }) => {
@@ -53,8 +54,10 @@ const Forms = ({ uuid, socket, setUser }) => {
       <div className="logo">
         <span className="sync">Sync</span>
         <img
+          width={50}
+          height={50}
           id="logo-pencil"
-          src="https://img.icons8.com/?size=50&id=13370&format=png&color=000000"
+          src="https://img.icons8.com/?size=100&id=13370&format=png&color=000000"
         ></img>
         <span className="sketch">Sketch</span>
       </div>

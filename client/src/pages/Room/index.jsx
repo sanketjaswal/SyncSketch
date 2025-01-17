@@ -8,7 +8,6 @@ import { ColorPicker } from "../../components/ColorPicker";
 import Whiteboard from "../../components/Whiteboard";
 
 //images
-import brush from "../../assets/paintbrush.png";
 import hachure from "../../assets/hachure.png";
 import zigzagLine from "../../assets/zigzag-line.png";
 import dots from "../../assets/dots.png";
@@ -16,6 +15,7 @@ import crossHatch from "../../assets/cross-hatch.png";
 import dashed from "../../assets/dashed.png";
 import sunburst from "../../assets/sunburst.png";
 import solid from "../../assets/solid.png";
+import noPattern from "../../assets/pattern-cross.png";
 import { ToolButton } from "../../components/ToolBtn";
 import { Slider } from "../../components/Slider";
 
@@ -37,6 +37,8 @@ const RoomPage = ({ user, socket, users }) => {
   const [chat, setChat] = useState([]);
   const [message, setMessage] = useState("");
 
+  const chatRef = useRef(null);
+
   // message Response useEffect
   useEffect(() => {
     const handleMessageResponse = (data) => {
@@ -57,6 +59,7 @@ const RoomPage = ({ user, socket, users }) => {
       setMessage("");
     }
   };
+
 
   // clearing canvas
   const handleClearCanvas = () => {
@@ -104,6 +107,13 @@ const RoomPage = ({ user, socket, users }) => {
   // Toggle user chat visibility
   const toggleUserchat = () => {
     setChatVisible(!chatVisible);
+    if (!chatVisible) {
+      document.getElementById("user-menu").src =
+        "https://img.icons8.com/matisse/100/FFFFFF/menu.png";
+    } else {
+      document.getElementById("user-menu").src =
+        "https://img.icons8.com/ios-glyphs/100/FFFFFF/user-menu-male.png";
+    }
   };
 
   useEffect(() => {
@@ -135,16 +145,15 @@ const RoomPage = ({ user, socket, users }) => {
       canvs.style.cursor = "crosshair";
     } else if (tool == "text") {
       canvs.style.cursor = "text";
-    } 
-    else if (tool == "brush") {
-      canvs.style.cursor = "url(https://img.icons8.com/ios-filled/30/cosmetic-brush.png)0 50 , auto";
-    }
-    else if (tool == "spray") {
-      canvs.style.cursor = "url(https://img.icons8.com/ios-glyphs/30/deodorant-spray.png)20 0 , auto";
-    }else if (tool == "select") {
+    } else if (tool == "brush") {
       canvs.style.cursor =
-      "pointer"
-        // "url(https://img.icons8.com/sf-regular/28/resize-four-directions.png)0 50 , auto";
+        "url(https://img.icons8.com/ios-filled/30/cosmetic-brush.png)0 50 , auto";
+    } else if (tool == "spray") {
+      canvs.style.cursor =
+        "url(https://img.icons8.com/ios-glyphs/30/deodorant-spray.png)20 0 , auto";
+    } else if (tool == "select") {
+      canvs.style.cursor = "pointer";
+      // "url(https://img.icons8.com/sf-regular/28/resize-four-directions.png)0 50 , auto";
     }
   };
 
@@ -156,7 +165,7 @@ const RoomPage = ({ user, socket, users }) => {
     } else if (fillStyle == "cross-hatch") {
       patterIcon.src = crossHatch;
     } else if (fillStyle == null) {
-      patterIcon.src = "https://img.icons8.com/windows/32/hand-holding.png";
+      patterIcon.src = noPattern;
     } else if (fillStyle == "dots") {
       patterIcon.src = dots;
     } else if (fillStyle == "dashed") {
@@ -176,13 +185,6 @@ const RoomPage = ({ user, socket, users }) => {
       <div className="hoverName">
         <p className="Hnamep"></p>
       </div>
-      {/* LOGO */}
-      <header className="app-header">
-        <div className="loggo">
-          <span className="syncc">Sync</span>
-          <span className="sketche">Sketch</span>
-        </div>
-      </header>
 
       {/* BELOW HEADER */}
       <div className="below-header">
@@ -191,17 +193,19 @@ const RoomPage = ({ user, socket, users }) => {
           className="controls controls-bar"
           onMouseOver={(e) => toolHover(e)}
         >
-          <img className="controls-bgi" src={brush}></img>
           {/* CHAT BUTTON */}
-          <div className="control-item user-button" onClick={toggleUserchat}>
+          <div className="control-item user-button">
+            <div className="loggo">
+              <span className="syncc">Sync </span>
+              &nbsp;&nbsp;
+              <span className="sketche">Sketch</span>
+            </div>
             <img
-              className="menu-icon"
-              src="https://img.icons8.com/?size=100&id=36389&format=png&color=ffffff"
+              onClick={toggleUserchat}
+              id="user-menu"
+              src="https://img.icons8.com/ios-glyphs/50/FFFFFF/user-menu-male.png"
               alt="User Menu Icon"
             />
-            <h2>
-              {users.filter((usr) => usr.roomId === roomId).length} Users Online
-            </h2>
           </div>
 
           <div className="control-buttons">
@@ -210,7 +214,7 @@ const RoomPage = ({ user, socket, users }) => {
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/dusk/30/paint-brush.png"
+                src="https://img.icons8.com/dusk/100/paint-brush.png"
                 alt="paint-brush"
                 id="paint-plate"
               />
@@ -222,7 +226,7 @@ const RoomPage = ({ user, socket, users }) => {
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/color/30/fill-color.png"
+                src="https://img.icons8.com/color/50/fill-color.png"
                 alt="fill-color"
               />
               <ColorPicker
@@ -236,7 +240,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="eraser"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/metro/26/eraser.png"
+              icon="https://img.icons8.com/metro/50/eraser.png"
             ></ToolButton>
 
             {/* TEXT */}
@@ -244,7 +248,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="text"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/ios-glyphs/30/paste-as-text.png"
+              icon="https://img.icons8.com/ios-glyphs/50/paste-as-text.png"
             ></ToolButton>
 
             {/* SELECT */}
@@ -252,7 +256,7 @@ const RoomPage = ({ user, socket, users }) => {
               tool="select"
               btnType="tool-btn"
               onClick={setTool}
-              icon="https://img.icons8.com/sf-regular/48/resize-four-directions.png"
+              icon="https://img.icons8.com/material-outlined/50/hand-cursor.png"
             ></ToolButton>
 
             {/* FILL PATTERN DROPDOWN */}
@@ -269,7 +273,6 @@ const RoomPage = ({ user, socket, users }) => {
                   id="dropdown-value-image"
                   width="40"
                   height="40"
-                  src="https://img.icons8.com/windows/50/hand-holding.png"
                   alt="empty_1"
                 />
               </button>
@@ -336,7 +339,7 @@ const RoomPage = ({ user, socket, users }) => {
                   tool={null}
                   btnType="drop-pattern"
                   onClick={setFillStyle}
-                  icon="https://img.icons8.com/windows/32/hand-holding.png"
+                  icon={noPattern}
                 ></ToolButton>
               </div>
             </div>
@@ -345,6 +348,8 @@ const RoomPage = ({ user, socket, users }) => {
             {/* MARKER */}
             <ToolButton
               tool="marker"
+              width={26}
+              height={26}
               btnType="tool-btn"
               onClick={setTool}
               icon="https://img.icons8.com/ios-filled/50/marker-pen.png"
@@ -440,8 +445,8 @@ const RoomPage = ({ user, socket, users }) => {
               icon="https://img.icons8.com/material-outlined/50/like--v1.png"
             ></ToolButton>
 
-           {/* Brush */}
-           {/* <ToolButton
+            {/* Brush */}
+            {/* <ToolButton
               tool="brush"
               btnType="tool-btn"
               onClick={setTool}
@@ -479,7 +484,7 @@ const RoomPage = ({ user, socket, users }) => {
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/ios-filled/30/undo.png"
+                src="https://img.icons8.com/ios-filled/50/undo.png"
                 alt="undo"
               />{" "}
             </button>
@@ -552,52 +557,82 @@ const RoomPage = ({ user, socket, users }) => {
             </button>
           </div>
 
-          {/* NAMES */}
-          <div className={` ${openChat ? "name-visible" : "name-hidden"}`}>
-            {users
-              .filter((usr) => usr.roomId === roomId)
-              .map((usr, index) => (
-                <span key={index}>
-                  {usr.name}
-                  {user && user.userId === usr.userId && " (You)"}
+          {/* COPY ROOM ID */}
+          {openChat ? (
+            <>
+              <div
+                className="copyId open-chat-cont "
+                onClick={() => navigator.clipboard.writeText(roomId)}
+              >
+                Copy Room ID : <span>{roomId}</span>{" "}
+              </div>
+
+              {/* USERS online */}
+              <h3 id="users-online">
+                Users Online : &nbsp;
+                <span>
+                  {users.filter((usr) => usr.roomId === roomId).length}
                 </span>
-              ))}
-          </div>
+              </h3>
+
+              {/* NAMES */}
+              <div className="users-list">
+                {users
+                  .filter((usr) => usr.roomId === roomId)
+                  .map((usr, index) => (
+                    <span
+                      key={index}
+                      id={user && user.userId === usr.userId && "you"}
+                    >
+                      {usr.name} &nbsp;
+                      {user && user.userId === usr.userId && " (You)"}
+                    </span>
+                  ))}
+              </div>
+            </>
+          ) : null}
 
           {/* CHAT TOOLS */}
-          <div
-            className={`chat-tools ${
-              openChat ? "name-hidden" : "name-visible"
-            }`}
-          >
-            <div className="chat">
-              {chat.map((msg, index) => (
-                <div
-                  className={`chat-and-user ${
-                    user && user.userId === msg.userId && "msg-me"
-                  }`}
-                  key={index}
-                  id={users.find((usr) => usr.userId === msg.userId).name}
-                >
-                  <div className="chat-user-icon">
-                    {users
-                      .find((usr) => usr.userId === msg.userId)
-                      .name.charAt(0)
-                      .toUpperCase()}
+          {!openChat ? (
+            <div className={`chat-tools `}>
+              <div className="chat" ref={chatRef}>
+                {chat.map((msg, index) => (
+                  <div
+                    className={`chat-and-user ${
+                      user && user.userId === msg.userId && "msg-me"
+                    }`}
+                    key={index}
+                    id={users.find((usr) => usr.userId === msg.userId).name}
+                  >
+                    <div className="chat-user-icon">
+                      {users
+                        .find((usr) => usr.userId === msg.userId)
+                        .name.charAt(0)
+                        .toUpperCase()}
+                    </div>
+                    <div className="chat-bubble">{msg.message}</div>
                   </div>
-                  <div className="chat-bubble">{msg.message}</div>
+                ))}
+              </div>
+              <form onSubmit={sendMessage}>
+                <div className="chat-input">
+                  <input
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  />
+                  <button type="submit">
+                    <img
+                      width="30"
+                      height="30"
+                      src="https://img.icons8.com/ios-glyphs/50/3498db/filled-sent.png"
+                      alt="filled-sent"
+                    />
+                  </button>
                 </div>
-              ))}
+              </form>
             </div>
-            <div className="chat-input">
-              <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-              />
-              <button onClick={sendMessage}>Send</button>
-            </div>
-          </div>
+          ) : null}
         </div>
 
         {/* WHITEBOARD */}

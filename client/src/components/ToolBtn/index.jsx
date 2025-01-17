@@ -1,4 +1,8 @@
+import PropTypes from 'prop-types';
+
 export const ToolButton = ({ tool,btnType, width, height, onClick, icon }) => {
+  
+  
   return (
     <div
       className={`${btnType} hover-tool`}
@@ -12,6 +16,16 @@ export const ToolButton = ({ tool,btnType, width, height, onClick, icon }) => {
         src={icon}
         alt={tool}
       />
-    </div>
-  );
+      </div>
+);
 };
+
+ToolButton.propTypes = {
+  tool: PropTypes.string.isRequired,
+  btnType: PropTypes.string.isRequired,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onClick: PropTypes.func.isRequired,
+  icon: PropTypes.string.isRequired,
+};
+

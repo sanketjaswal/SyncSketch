@@ -1,13 +1,19 @@
+/* Global styles */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
 .row {
   height: 100vh;
   width: 100vw;
-  width: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   font-family: Arial, sans-serif;
-  /* background-image: url(../../assets/paintbrush.png); */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -23,35 +29,34 @@
   justify-content: center;
   align-items: end;
   position: absolute;
+  top: 45%;
   transition: 1s ease-in-out;
+  transform: scale(2);
   font-family: "Dancing Script", serif;
   cursor: pointer;
-  top: 45%;
-  transform: scale(2);
 }
 
 .logo:hover {
   transform: scale(1.1);
-  transition: 0.5s;
+  transition: transform 0.5s ease-in-out;
 }
 
 #logo-pencil {
-  transition: 1s;
   opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
 .logo:hover #logo-pencil {
   transform: scale(0.9);
-  transition: 0.5s;
+  transition: transform 0.5s ease-in-out;
 }
 
 .sync {
   color: #42474c;
   font-size: 35px;
-  margin-inline: 0 5px;
   position: absolute;
-  transition: 0.5s;
   left: 0;
+  transition: left 0.5s ease-in-out;
 }
 
 .sketch {
@@ -60,7 +65,7 @@
   font-size: 45px;
   position: absolute;
   right: 0;
-  transition: 0.5s;
+  transition: right 0.5s ease-in-out;
 }
 
 .form-container {
@@ -78,13 +83,11 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   background-color: #f9f9f9d2;
   opacity: 0;
-  transition: 1s;
-  animation: fadeIn 0.5s ease-in-out 4s;
+  transition: opacity 1s ease-in-out;
 }
 
 .form-box:hover {
   background-color: white;
-  transition: 0.2s;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -104,13 +107,121 @@
     opacity: 1;
     transform: translateY(0);
   }
+
 }
 
-@keyframes image-clip {
-  from {
-    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+@media (max-width: 1300px) {
+  .logo {
+    font-size: 1.5rem;
+    transform: scale(1.8);
+    width: 105%;
   }
-  to {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+@media (max-width: 1200px) {
+  .logo {
+    font-size: 1.5rem;
+    transform: scale(1.7);
+    width: 125%;
   }
+}
+
+@media (max-width: 1100px) {
+  .logo {
+    font-size: 1.5rem;
+    transform: scale(1.5);
+    width: 135%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .logo {
+    font-size: 1.5rem;
+    transform: scale(1.5);
+    width: 135%;
+    background-color: green;
+
+  }
+
+}
+
+@media (max-width: 900px) {
+  .logo {
+    font-size: 1.5rem;
+    transform: scale(1.5);
+    width: 150%;
+    top: 10%;
+
+  }
+
+  .form-container {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+
+  .form-box {
+    width: 90%;
+    /* margin: 10px 0; */
+    transform: scale(.9);
+  }
+
+  .sync {
+    font-size: 32px;
+  }
+
+  .sketch {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 800px) {
+  .logo {
+    font-size: 1.5rem;
+    transform: scale(1.5);
+    width: 150%;
+  }
+
+  .sync {
+    font-size: 28px;
+  }
+
+  .sketch {
+    font-size: 35px;
+  }
+
+  
+  
+
+  
+}
+
+@media (max-width: 700px) {
+  .logo {
+    font-size: 1.5rem;
+    transform: scale(1.5);
+    width: 180%;
+    background-color: blue;
+  }
+
+}
+
+@media (max-width: 600px) {
+  .logo {
+    font-size: 1.5rem;
+    transform: scale(1.5);
+    width: 210%;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+  .logo {
+    font-size: 1.5rem;
+    transform: scale(1.5);
+    /* top: 20%; */
+    width: 240%;
+  }
+
 }

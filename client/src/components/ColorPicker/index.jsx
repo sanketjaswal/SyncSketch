@@ -1,8 +1,9 @@
-import React, { useCallback, useState, useEffect } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
 import "./index.css";
 
-import { HexColorPicker, RgbaColorPicker, HexColorInput } from "react-colorful";
+import { HexColorPicker } from "react-colorful";
 
 export const ColorPicker = ({ color, setColor }) => {
   const [isOpen, toggle] = useState(false);
@@ -16,11 +17,6 @@ export const ColorPicker = ({ color, setColor }) => {
         }}
         onClick={() => toggle(true)}
       />
-      {/* <HexColorInput
-        color={color}
-        onChange={setColor}
-        onClick={() => toggle(false)}
-      /> */}
 
       {isOpen && (
         <div className="popover">
@@ -32,5 +28,11 @@ export const ColorPicker = ({ color, setColor }) => {
         </div>
       )}
     </div>
-  );
+  )
 };
+
+ColorPicker.propTypes = {
+  color: PropTypes.string.isRequired,
+  setColor: PropTypes.func.isRequired,
+};
+

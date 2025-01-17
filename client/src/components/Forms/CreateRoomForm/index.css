@@ -22,9 +22,11 @@ form{
   }
   
   .input-field.read-only {
-    background-color: #e9ecef;
+    background-color: #fff6f6;
     cursor: not-allowed;
     font-size: 12px;
+    text-align: center;
+    width: min-content;
   }
   
   .btn {
@@ -40,23 +42,34 @@ form{
     background-color: #007bff;
     color: white;
   }
+  
   .generate-btn:hover {
-    background-color: #0056b3;
+    background-color: #00448d;
   }
   
   .copy-btn {
     background-color: #6c757d;
     color: white;
   }
+  
   .copy-btn:hover {
-    background-color: #5a6268;
+    background-color: #3e3e3e;
   }
   
+  .input-group .btn:active{
+    transform: scale(.95);
+  }
+
   .submit-btn {
     width: 100%;
-    background-color: #343a40;
+    background-color: #535353;
     color: white;
   }
   .submit-btn:hover {
     background-color: #23272b;
+  }
+
+  .submit-btn:active {
+    transform: scaley(.93) scaleX(.98);
+    background-color: #08090a;
   }

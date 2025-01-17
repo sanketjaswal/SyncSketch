@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
+import PropTypes from "prop-types";
+import { generateSixDigitCode } from "../../../utils/uuid";
 
 const CreateRoomForm = ({ uuid, socket, setUser }) => {
-  const [roomId, setRoomId] = useState(uuid());
+  const [roomId, setRoomId] = useState(generateSixDigitCode());
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
@@ -19,7 +21,7 @@ const CreateRoomForm = ({ uuid, socket, setUser }) => {
     };
 
     setUser(roomData);
-    socket.emit("userJoined", roomData); 
+    socket.emit("userJoined", roomData);
     navigate(`/${roomId}`);
   };
 
@@ -35,13 +37,26 @@ const CreateRoomForm = ({ uuid, socket, setUser }) => {
         />
       </div>
       <div className="input-group">
-        <input type="text" className="input-field read-only" value={roomId} readOnly />
+        <input
+          type="text"
+          className="input-field read-only"
+          value={roomId}
+          readOnly
+        />
         <button
           type="button"
           className="btn generate-btn"
-          onClick={() => setRoomId(uuid())}
+          onClick={() => setRoomId(generateSixDigitCode())}
         >
           Generate
+        </button>
+        <button
+          type="button"
+          className="btn copy-btn"
+          onClick={() => navigator.clipboard.writeText(roomId)}
+          disabled={!roomId} // Disable the button if roomId is empty
+        >
+          Copy
         </button>
       </div>
       <button type="submit" onClick={createRoom} className="btn submit-btn">
@@ -49,6 +64,11 @@ const CreateRoomForm = ({ uuid, socket, setUser }) => {
       </button>
     </form>
   );
+};
+CreateRoomForm.propTypes = {
+  uuid: PropTypes.func.isRequired,
+  socket: PropTypes.object.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default CreateRoomForm;

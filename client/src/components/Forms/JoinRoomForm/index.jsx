@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './index.css'
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const JoinRoomForm = ({uuid, socket, setUser}) => {
 
@@ -52,5 +53,12 @@ const JoinRoomForm = ({uuid, socket, setUser}) => {
         </form>
     )
 }
+JoinRoomForm.propTypes = {
+  uuid: PropTypes.func.isRequired,
+  socket: PropTypes.shape({
+    emit: PropTypes.func.isRequired
+  }).isRequired,
+  setUser: PropTypes.func.isRequired
+};
 
 export default JoinRoomForm;
